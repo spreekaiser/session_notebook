@@ -7,8 +7,16 @@
 - [ ] [React State](#react-state)
 - [ ] [React State 2](#react-state-2)
 - [ ] [React State 3](#react-state-3)
+- [ ] [React with Local Storage](#react-with-local-storage)
 - [ ] [React Effects and fetch](#react-effects-and-fetch)
-- [ ] []()
+- [ ] [React Data Fetching](#react-data-fetching)
+- [ ] [React Custom Hooks](#react-custom-hooks)
+- [ ] [Next.js Basics and Routing](#nextjs-basics-and-routing)
+- [ ] [Next.js Dynamic Routes](#nextjs-dynamic-routes)
+- [ ] [React Component Testing](#react-component-testing)
+- [ ] [React Styled Components](#react-styled-components)
+- [ ] [React Global State](#react-global-state)
+- [ ] [React Immutable State](#react-immutable-state)
 
 ## React Basics
 
@@ -1421,6 +1429,172 @@ setMinHeight(9);
 - [Updating Objects in State (React Docs)](https://react.dev/learn/updating-objects-in-state)
 - [Updating Arrays in State (React Docs)](https://react.dev/learn/updating-arrays-in-state)
 
+## React with Local Storage
+
+### Learning Objectives
+
+- [ ] Understanding the concept of persistent storage in the browser
+- [ ] Knowing the difference between `localStorage` and `sessionStorage`
+- [ ] Using the methods `setItem()` and `getItem()`
+- [ ] Using a library to handle local storage in React apps
+
+---
+
+### The Web Storage API
+
+> 💡 Note that the Web Storage API is not part of React. It is a browser API that is available in all modern browsers.
+
+The Web Storage API provides two methods for storing data on the client:
+
+- `localStorage` stores data with no expiration date
+- `sessionStorage` stores data for one session (data is lost when the browser tab is closed)
+
+Data is stored in the browser and per domain, i.e. all data stored by `example.com` can be accessed by `www.example.com` and `subdomain.example.com`, but not by `others.org`.
+
+This makes it possible to store data across page reloads and browser restarts in a secure way.
+
+To store data the API uses key-value pairs. The key is a string and the value can be a string, a number or a boolean.
+
+> 💡 All following examples use `localStorage` but the same applies to `sessionStorage`.
+
+> 📙 Read more about the [**Web Storage API** on the mdn web docs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).
+
+#### Storing Data
+
+To store data, use the `setItem()` method:
+
+```js
+localStorage.setItem("name", "Alex");
+localStorage.setItem("age", 28);
+localStorage.setItem("isOnline", true);
+```
+
+#### Retrieving Data
+
+To retrieve data, use the `getItem()` method:
+
+```js
+const name = localStorage.getItem("name"); // → "Alex"
+const age = localStorage.getItem("age"); // → 28
+const isOnline = localStorage.getItem("isOnline"); // → true
+```
+
+Calling `getItem` returns `null` if the key does not exist.
+
+```js
+const nope = localStorage.getItem("nope"); // → null
+```
+
+#### Removing Data
+
+To remove data, use the `removeItem()` method:
+
+```js
+localStorage.removeItem("name");
+```
+
+#### Clearing All Data
+
+To remove all data, use the `clear()` method:
+
+```js
+localStorage.clear();
+```
+
+#### Storing Complex Data
+
+The Web Storage API only supports strings, numbers and booleans. To store more complex data, you need to serialize it first. This can be done using the `JSON.stringify()` method:
+
+```js
+const user = {
+  name: "Alex",
+  age: 28,
+  isOnline: true,
+};
+
+localStorage.setItem("user", JSON.stringify(user));
+```
+
+To retrieve the data, you need to parse it using the `JSON.parse()` method:
+
+```js
+const user = JSON.parse(localStorage.getItem("user"));
+```
+
+#### Helper Functions
+
+To make working with the Web Storage API easier, you can create helper functions that encapsulate the serialization and deserialization:
+
+```js
+// store data
+function setItem(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+// retrieve data
+function getItem(key) {
+  return JSON.parse(localStorage.getItem(key));
+}
+```
+
+These functions will work with simple data types like strings and numbers as well as complex data types:
+
+```js
+setItem("user", {
+  name: "Alex",
+  age: 28,
+  isOnline: true,
+});
+setItem("count", 42);
+
+const user = getItem("user");
+const count = getItem("count");
+```
+
+### React with Local Storage
+
+You can also use the Web Storage API in React. Most commonly, you'll want to persist state in local storage so that it survives page reloads.
+
+React has several ways that allow you to synchronize state with local storage. The general concept is to retrieve the initial state from local storage and to store the state in local storage whenever it changes.
+
+Because it becomes quite tricky to correctly wire up all the different pieces yourself, you'll want to use a library that provides a hook for this.
+
+#### `use-local-storage-state`
+
+The [`use-local-storage-state`](https://github.com/astoilkov/use-local-storage-state) library provides a hook that allows you to persist state in local storage.
+
+You can use it as a drop-in replacement for the `useState` hook (commented out in the example below):
+
+```js
+// import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
+
+function Counter() {
+  // const [count, setCount] = useState(0);
+  const [count, setCount] = useLocalStorageState("count", { defaultValue: 0 });
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+> 💡 Notice that the first argument of the `useLocalStorageState` hook is the key that is used to store the state in local storage. If you use the same key for multiple components, they will share the same state.
+
+> 💡 You don't need to handle serialization or parsing of complex data yourself with `use-local-storage-state`. The library takes care of it for you in the background.
+
+> 📙 Read more about [**how to use the `use-local-storage-state` hook** in its docs](https://github.com/astoilkov/use-local-storage-state#usage).
+
+---
+
+### Resources
+
+- [Web Storage API on the mdn web docs](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
+- [use-local-storage-state on GitHub](https://github.com/astoilkov/use-local-storage-state)
+
 ## React Effects and Fetch
 
 ### Learning Objectives
@@ -1695,3 +1869,1864 @@ In the future we will use a data fetching library to address these issues.
 - [React docs: Synchronizing with Effects](https://react.dev/learn/synchronizing-with-effects)
 - [React docs: Fetching data example with useEffect](https://react.dev/learn/synchronizing-with-effects#fetching-dat)
 - [React docs: You Might Not Need an Effect](https://react.dev/learn/you-might-not-need-an-effect)
+
+## React Data Fetching
+
+### Learning Objectives
+
+- [ ] Understanding the advantages of a fetching library in general
+- [ ] Knowing how to fetch with `SWR`:
+  - `fetcher` function
+  - loading and validating state
+  - error state
+  - fetching on interval
+  - `mutate()`
+- [ ] Knowing how to combine local state with fetched data
+
+---
+
+### Why a data fetching library over `useEffect` and `fetch`?
+
+Up to now, you can fetch data using the `useEffect` hook. By doing so, you will need to handle many
+things on your own:
+
+- caching fetched data
+- refetching programmatically
+- implementing an error and loading state
+- fetching on interval
+- and many more.
+
+A fetching library like `SWR` will provide you with shortcuts for all this tasks.
+
+> 📙 Read more about [SWR's features](https://swr.vercel.app/#features).
+
+---
+
+### How to SWR
+
+#### Basic Fetching
+
+In order to use the `useSWR` hook, you first need to create a fetcher function, which is just a
+wrapper of the native fetch. A basic example
+[recommended by the docs](https://swr.vercel.app/docs/getting-started) looks like this:
+
+```js
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+```
+
+Then you can import the `useSWR` hook and pass it two argument: the `url` you want to fetch and the
+`fetcher` function. `useSWR` returns a `data` object you can use in your JSX.
+
+```js
+import useSWR from "swr";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+function Character() {
+  const { data } = useSWR("https://swapi.dev/api/people/1", fetcher);
+
+  // render data
+  return <div>Hello {data.name}!</div>; // Hello Luke Skywalker!
+}
+```
+
+> 💡 Note that `useSWR` returns an object from which you destructure `data`. This is why you cannot
+> simply call the `data` object as you like, but have to rename it according to destructuring rules:
+> `{ data: person }`. 📙 Read more about
+> [Getting Started in the docs](https://swr.vercel.app/docs/getting-started).
+
+#### Configuring SWR
+
+It can be useful to set some application-wide configuration for `SWR`. You can do so by passing an
+config object to the `SWRConfig` component in your `App` (in Next.js that `pages/_app.js`). The following example sets an application wide `fetcher` function and
+an application wide `refreshInterval`:
+
+```js
+import { SWRConfig } from "swr";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+function App() {
+  return (
+    <SWRConfig
+      value={{
+        fetcher,
+        refreshInterval: 1000,
+      }}
+    >
+      {/* … your app */}
+    </SWRConfig>
+  );
+}
+```
+
+Setting an application-wide `fetcher` function is very convenient if you want to use the same fetcher function in many
+places.
+
+> 💡 All following examples will assume an application-wide `fetcher` function configured via
+> `SWRConfig`.
+
+#### Loading and Error State
+
+The `useSWR` hook provides an `error`, `isLoading` (loading data for the first time) and `isValidating` (anytime data is (re-)loaded) state you can use to create the respective UI
+output.
+
+You can destructure them like the `data` object and use them to conditionally return JSX:
+
+```js
+function Character() {
+  const { data, error, isLoading, isValidating } = useSWR(
+    "https://swapi.dev/api/people/1"
+  );
+
+  if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
+
+  // render data
+  return (
+    <div>
+      <span role="img" aria-label={isValidating ? "Validating" : "Ready"}>
+        {isValidating ? "🔄" : "✅"}
+      </span>
+      Hello {data.name}!
+    </div>
+  );
+}
+```
+
+The `fetcher` function above does not `throw` an `Error` object for non-`ok` Responses. Throwing is required for SWR to recognize an error and put it into the `error` property of the object returned by the hook.
+
+You can customize the `fetcher` to `throw` an `Error` with additional information (the following
+[example is taken from the docs](https://swr.vercel.app/docs/error-handling#status-code-and-error-object)):
+
+```js
+const fetcher = async (url) => {
+  const res = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await res.json();
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
+};
+```
+
+This function throws an error with the keys `info` and `status` if the status code of
+the response is not in the range of 200-299.
+
+> 💡 The advanced `fetcher` above uses two concepts we have not covered:
+> [the `new` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)
+> and
+> [the `throw` statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw).
+> These are advanced JS features we don't need to go into detail by now, but diving into it will
+> give you a better understanding of JS as a programming language.
+> 📙 Read more about [Status Code and Error Object](https://swr.vercel.app/docs/error-handling#status-code-and-error-object).
+
+You can use the `error` object to display a more detailed error message (`message` is the string from `new Error()`):
+
+```js
+function Character() {
+  const { data, error, isLoading } = useSWR("https://swapi.dev/api/people/1");
+
+  if (error) return <div>{error.message}</div>;
+  if (isLoading) return <div>loading...</div>;
+
+  // render data
+  return <div>Hello {data.name}!</div>;
+}
+```
+
+#### Fetch on Interval and Button Click
+
+To refetch the API on interval, pass a `refreshInterval` value inside of an option object as an additional
+argument to the `useSWR` hook:. In the following example, `SWR` will refetch the API every second:
+
+```js
+useSWR("https://swapi.dev/api/people/1", { refreshInterval: 1000 });
+```
+
+> 📙 Read more about
+> [Revalidate on Interval](https://swr.vercel.app/docs/revalidation#revalidate-on-interval).
+
+To fetch data programmatically (like clicking a button), you can use the `mutate` function provided
+by the `useSWR` hook.
+
+```js
+function Character() {
+  const { data, mutate } = useSWR("https://swapi.dev/api/people/1");
+
+  return <RefetchButton onRefetch={() => mutate()}>Refetch data</RefetchButton>;
+}
+
+function RefetchButton({ children, onRefetch }) {
+  return (
+    <button type="button" onClick={onRefetch}>
+      {children}
+    </button>
+  );
+}
+```
+
+#### Data is Cached
+
+`SWR` will cache the fetched data in the browser's memory. This means that if you fetch the same
+data twice, the second time it will be loaded from the cache instead of the network. This means that you can use the `useSWR` hook multiple times in your app without
+having to worry about fetching the same data multiple times.
+
+```js
+function CharacterName() {
+  const { data } = useSWR("https://swapi.dev/api/people/1");
+  return <div>Hello {data.name}!</div>; // Hello Luke Skywalker!
+}
+
+function CharacterHairColor() {
+  const { data } = useSWR("https://swapi.dev/api/people/1");
+  return <div>His hair color is {data.hair_color}.</div>; // His hair color is blond.
+}
+
+function CharacterHeight() {
+  const { data } = useSWR("https://swapi.dev/api/people/1");
+  return <div>He is {data.height} cm tall.</div>; // He is 172 cm tall.
+}
+
+function App() {
+  return (
+    <>
+      <CharacterName />
+      <CharacterHairColor />
+      <CharacterHeight />
+    </>
+  );
+}
+```
+
+This application will fetch the data only once, even though the `useSWR` hook is used three times.
+
+Additionally, if you were to manually `mutate` the data (triggering a revalidation), the cache would be updated and the data would be available to all components using the `useSWR` hook with the same key (URL).
+
+This is true even if you were to call `mutate` from yet another component, as long as it has the same key (URL):
+
+```js
+function RevalidateButton() {
+  const { mutate } = useSWR("https://swapi.dev/api/people/1");
+  return (
+    <button type="button" onClick={() => mutate()}>
+      Revalidate
+    </button>
+  );
+}
+
+// … other components
+
+function App() {
+  return (
+    <>
+      <CharacterName />
+      <CharacterHairColor />
+      <CharacterHeight />
+      <RevalidateButton />
+    </>
+  );
+}
+```
+
+#### SWR Response API
+
+The `useSWR` hook returns an SWR response object with the following properties:
+
+| response property | description                                            |
+| ----------------: | ------------------------------------------------------ |
+|            `data` | The data fetched for the given key (URL)               |
+|           `error` | An error object if the fetcher function threw an error |
+|       `isLoading` | `true` if the data is being loaded for the first time  |
+|    `isValidating` | `true` if there is any request or revalidation loading |
+|        `mutate()` | A function to mutate the data                          |
+
+### Combine Fetched Data with Local State
+
+With SWR you don't control the state containing the fetched data yourself. Because of this you can't modify the state directly. This is a **good thing** because modifying state that has been fetched from a server is an anti-pattern. If your server gives you data it has to be the single source of truth.
+
+If you want to enrich server data with local state (like attaching an `isFavorite` property to a movie) you can use the `useSWR` hook to fetch the data and the `useState` hook to manage the local state. The local state should be connected to the server data via a unique identifier (like `id` or `slug`).
+
+```js
+function Movies() {
+  /* let's assume the API return a list of movies like this:
+    [
+      {
+        id: 1,
+        title: "Star Wars",
+        year: 1977,
+      },
+      {
+        id: 2,
+        title: "The Empire Strikes Back",
+        year: 1980,
+      }
+    ]
+  */
+  const { data: moviesData } = useSWR("/api/movies");
+
+  // initialize the local state with an empty array
+  const [moviesInfo, setMoviesInfo] = useState([]);
+
+  function handleToggleFavorite(id) {
+    setMoviesInfo((moviesInfo) => {
+      // find the movie in the state
+      const info = moviesInfo.find((info) => info.id === id);
+
+      // if the movie is already in the state, toggle the isFavorite property
+      if (info) {
+        return moviesInfo.map((info) =>
+          info.id === id ? { ...info, isFavorite: !info.isFavorite } : info
+        );
+      }
+
+      // if the movie is not in the state, add it with isFavorite set to true
+      return [...moviesInfo, { id, isFavorite: true }];
+    });
+  }
+
+  return (
+    <ul>
+      {moviesData.map(({ id, title, year }) => {
+        // find the movie in the state and destructure the isFavorite property
+        // if it is not in the state, default isFavorite to false
+        const { isFavorite } = moviesInfo.find((info) => info.id === id) ?? {
+          isFavorite: false,
+        };
+
+        return (
+          <li key={id}>
+            {title} ({year})
+            <button type="button" onClick={handleToggleFavorite(id)}>
+              {isFavorite ? "Remove from favorites" : "Add to favorites"}
+            </button>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+```
+
+> 💡 When using this pattern you are relying on your local state being created ad-hoc. Therefore your local state array will return `undefined` on `find` if the movie is not in the state. This is why we use the `??` operator to default to `{ isFavorite: false }` if the movie is not in the state.
+
+If you use Immer and `useImmer` you can simplify the update code a bit:
+
+```js
+function handleToggleFavorite(id) {
+  updateMoviesInfo((draft) => {
+    // find the movie in the state
+    const info = draft.find((info) => info.id === id);
+
+    // if the movie is already in the state, toggle the isFavorite property
+    if (info) {
+      info.isFavorite = !info.isFavorite;
+    } else {
+      // if the movie is not in the state, add it with isFavorite set to true
+      draft.push({ id, isFavorite: true });
+    }
+  });
+}
+```
+
+---
+
+### Resources
+
+- [SWR Docs](https://swr.vercel.app/docs/getting-started)
+
+## React Custom Hooks
+
+### Learning Objectives
+
+- [ ] Understanding what a custom hook is and how to create one
+- [ ] Understanding that custom hooks can abstract stateful logic (`useState`, `useEffect`)
+- [ ] Understanding when to create a custom hook
+
+---
+
+### Introduction
+
+React comes with a few basic (but nevertheless _use_-ful) hooks. We learned about `useState` and `useEffect`.
+
+Sometimes you want a hook that is build for a more specific use case. You can create your own custom hooks. They are functions that start with `use` and can use other hooks.
+
+- A state with serveral specific update functions (e.g. `value`, `increment()`, `decrement()`, `reset()` → `useCount()`)
+- A state that is syncronized with window events and values (e.g. `useWindowWidth()`)
+- A state that represents a fetched resource (e.g. `useFetch()`)
+- A state that is persisted in the browser's local storage (e.g. [`useLocalStorageState()`](https://github.com/astoilkov/use-local-storage-state))
+
+> 📙 Read more about [**Reusing Logic with Custom Hooks** in the React docs](https://react.dev/learn/reusing-logic-with-custom-hooks).
+
+### Counter Example
+
+You could define a custom `useCount` hook like this:
+
+```js
+import { useState } from "react";
+
+function useCount(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
+
+  function increment() {
+    setCount(count + 1);
+  }
+
+  function decrement() {
+    setCount(count - 1);
+  }
+
+  function reset() {
+    setCount(initialValue);
+  }
+
+  return { count, increment, decrement, reset };
+}
+```
+
+And use it like this:
+
+```js
+import { useCount } from "./useCount";
+
+function Counter() {
+  const { count, increment, decrement, reset } = useCount(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
+    </div>
+  );
+}
+```
+
+> 💡 Here `useCount` uses the `useState` hook internally. This is why it needs to be a hook itself. Custom hooks need to follow the same rules as normal hooks: Only call hooks at the top level of your function, and only call them from inside a React function component or a custom hook.
+
+### Custom Hook Return Values
+
+Custom hooks can return anything a normal function can return. Here are some examples of common return values:
+
+#### Returning a single value
+
+Sometimes hooks only need to return a single value.
+
+```js
+function useWindowWidth() {
+  const [width, setWidth] = useState();
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return width;
+}
+```
+
+This hook only returns the current window width. It doesn't need to return anything else. The value can be given any name when using the hook.
+
+```js
+const currentWindowWidth = useWindowWidth();
+```
+
+#### Returning an array
+
+```js
+function useD6() {
+  const [value, setValue] = useState();
+
+  function roll() {
+    setValue(Math.floor(Math.random() * 6) + 1);
+  }
+
+  return [value, roll];
+}
+```
+
+This hook returns an array with the current value and a function to roll the dice. Returning an array is a common pattern, since it allows you to use array destructuring to get the values analogous to how `useState` works. Array destructuring has the benefit that you can easily name the values.
+
+```js
+const [firstDie, rollFirstDie] = useD6();
+const [secondDie, rollSecondDie] = useD6();
+```
+
+#### Returning an object
+
+```js
+function useCount(initialValue = 0) {
+  const [count, setCount] = useState(initialValue);
+
+  function increment() {
+    setCount(count + 1);
+  }
+
+  function decrement() {
+    setCount(count - 1);
+  }
+
+  function reset() {
+    setCount(initialValue);
+  }
+
+  return { count, increment, decrement, reset };
+}
+```
+
+> 💡 The return statement makes use of object shorthand notation. This is a nice way to return an object with properties that have the same name as the variable. The above is equivalent to:
+>
+> ```js
+> return {
+>   count: count,
+>   increment: increment,
+>   decrement: decrement,
+>   reset: reset,
+> };
+> ```
+
+When a hook exposes more values and functions, it is common to return an object. This allows you to use object destructuring to get the values. You can also just omit the properties you don't need from the destructuring.
+
+```js
+// Vorwärts immer, rückwärts nimmer…
+const { count, increment } = useCount(0);
+```
+
+### Hook Parameters
+
+Custom hook functions can have parameters like normal functions. This allows you to make the hook more flexible. In the `useCount` example above, the initial value can be passed as a parameter.
+
+```js
+function useCount(initialValue = 0) {
+  // …
+}
+
+const { count, increment, decrement, reset } = useCount(1337);
+```
+
+### Hooks and Modules
+
+Custom hooks can be defined in the same file as the component that uses them. But it is also common to define them in a separate file and import them.
+
+```js
+// useCount.js
+import { useState } from "react";
+
+export function useCount(initialValue = 0) {
+  // …
+}
+```
+
+```js
+// Counter.js
+import { useCount } from "./useCount";
+
+function Counter() {
+  const { count, increment, decrement, reset } = useCount(0);
+  // …
+}
+```
+
+### Abstract recurring logic into custom hooks
+
+#### A simple `useFetch` hook
+
+As fetch is a very common use case, it is a good candidate for a custom hook. Here is a simple `useFetch` hook that fetches a resource and returns the parsed response.
+
+```js
+import { useState, useEffect } from "react";
+
+export function useFetch(url) {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    async function startFetching() {
+      const response = await fetch(url);
+      const data = await response.json();
+      setData(data);
+    }
+    startFetching();
+  }, [url]);
+
+  return data;
+}
+```
+
+And use it like this:
+
+```js
+import { useFetch } from "./useFetch";
+
+function App() {
+  const jokes = useFetch("https://example-apis.vercel.app/api/bad-jokes");
+
+  return (
+    <div>
+      <h1>Bad Jokes</h1>
+      <ul>
+        {jokes?.map(({ id, joke }) => (
+          <li key={id}>{joke}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+> 💡 Notice that this hook does not implement any advanced features like handling race conditions, error handling, loading states or caching.
+
+#### A `usePokemon` hook that uses `useFetch`
+
+If we now want to have a simple to use hook for a very specific use case like fetching a single pokemon from the pokeapi, we can build a `usePokemon` hook that uses the `useFetch` hook internally.
+
+```js
+import { useFetch } from "./useFetch";
+
+export function usePokemon(name) {
+  const pokemon = useFetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
+  return pokemon;
+}
+```
+
+And use it like this:
+
+```js
+import { usePokemon } from "./usePokemon";
+
+function App() {
+  const pokemon = usePokemon("pikachu");
+
+  return (
+    <div>
+      <h1>{pokemon?.name}</h1>
+      <img src={pokemon?.sprites.front_default} alt={pokemon?.name} />
+    </div>
+  );
+}
+```
+
+Here we are using a custom hook (`useFetch`) inside another custom hook (`usePokemon`). This allows for quite powerful abstractions.
+
+### When should you create a custom hook?
+
+Custom hooks are a powerful tool to abstract recurring logic. But you should only create a custom hook if you are going to reuse the logic in multiple components. If you only need the logic in a single component, it is better to keep it in the component itself.
+
+If you are using something only once: Don't abstract it. If you are using something twice: You might want to abstract it.
+
+---
+
+### Resources
+
+- [Reusing Logic with Custom Hooks in the React docs](https://react.dev/learn/reusing-logic-with-custom-hooks)
+
+## Next.js Basics and Routing
+
+### Learning Objectives
+
+- [ ] Knowing the difference between a library and a framework
+- [ ] Understanding why Next.js is such a popular framework
+- [ ] Knowing which features will be used during the bootcamp
+- [ ] Understanding the basic concepts of Next.js:
+  - [ ] Client-side routing
+  - [ ] Page navigation with `next/link`
+  - [ ] Image optimization with `next/image`
+
+---
+
+### Difference between a Library and a Framework
+
+Next.js is a React framework, i.e. it is built on top of the React library. Both, a library as well as a framework, are reusable code written by someone else. Their purpose is to help you solve common problems in easier ways.
+
+When using a library, you are in control which parts of the code you use and when. In contrast, a framework like Next.js is more rigid: you only have a few limited choices when and how to use the given code. If you accept these limitations, a framework takes a lot of work off your hands in the background.
+
+### What is Next.js?
+
+Next.js is a React framework that gives you building blocks to create fast web applications. These building blocks provide pre-built solutions for the main concepts you will encounter when building modern applications, such as user interface, routing, data fetching, infrastructure, etc.
+
+> 📙 Read more about [N**ext.js** on the Next.js Homepage](https://nextjs.org/).
+
+### Which Features of Next.js are we going to use in the Bootcamp?
+
+Next.js will help us with the following topics:
+
+- A template to use as a starting point
+- A bundler, transpiler and development server
+- Routing: Navigate between pages, Dynamic Routing
+- Auto-optimized images
+- API Routes
+
+> 📙 Next.js has a lot more to offer, which is why it is such a popular framework. To get an impression of all features, [have a quick look at the documentation](https://nextjs.org/docs).
+
+---
+
+### How to Next.js: Basics
+
+#### Differences to Create React App
+
+Here you can see a comparison of some relevant differences between Next.js and Create React App (CRA):
+
+|                        | Next.js (new)                    | Create React App (old) |
+| ---------------------: | -------------------------------- | ---------------------- |
+| Start local dev server | `npm run dev`                    | `npm run start`        |
+|         Root component | `_app.js`                        | `App.js`               |
+|               Document | `_document.js`                   | `public/index.html`    |
+|        Default styling | CSS Modules\*                    | CSS\*                  |
+|              Rendering | Server and Client Side           | Client Side            |
+|       Route definition | file structure in `pages` folder | n/a                    |
+|      Client side links | `<Link>` component               | n/a                    |
+|     Image optimization | `<Image>` component              | n/a                    |
+|     Modifying `<head>` | `<Head>` component               | n/a                    |
+|           Font loading | `@next/font` package             | n/a                    |
+|             API routes | `pages/api` folder               | n/a                    |
+|                 ESLint | Next.js specific rules           | CRA specific rules     |
+|   Bundler + transpiler | Webpack/Turbopack + SWC          | Webpack + Babel        |
+
+\*Both Next.js and CRA support all modern styling solutions.
+
+#### Server-Side Rendering
+
+With CRA the browser loads an almost empty HTML document (`public/index.html`). Your React code is only executed in the browser.
+
+Next.js comes with a featured called "server-side rendering". This feature will execute your React components on the server to send a complete HTML document to the client (the browser). On the client your React code gets executed again.
+
+This enables a lot of optimization techniques we won't discuss. However, there is one important implication you need to know:
+
+Since your React code is executed in a server environment and not just a browser environment, you need to pay attention when using browser APIs (like `window` or `document`). They are only available in the browser and will break the app on the server. When using a browser API you need to ensure that your code is only executed on the client. For example code inside a `useEffect` hook is only executed on the client, since effects are not executed on the server, but only on the client. Event handlers like `onClick` are also only executed on the client.
+
+```jsx
+useEffect(() => {
+  console.log(window.innerWidth);
+}, []);
+
+return <button onClick={() => console.log(window.innerWidth)}>Click me</button>;
+```
+
+#### Routing
+
+Until now our React applications only ever displayed a single page. The process of conditionally rendering different pages based on the URL (path name) and navigating between these pages ist called routing.
+
+Since a good routing solution is not easy to make, almost all React developers rely on an external routing library. For example `react-router` is a very popular solution.
+
+Next.js provides routing as a built-in feature, so that you don't need another library.
+
+Routing in Next.js is based on the file system in the `pages` folder:
+
+- `pages/index.js` → `/` (`index.js` always implies the root route of a folder)
+- `pages/about.js` → `/about`
+
+To support more complex routes, you can create the appropriate nested folder structure:
+
+- `pages/about/me.js` → `/about/me`
+- `pages/about/all-others.js` → `/about/all-others`
+- `pages/about/some/long/route.js` → `/about/some/long/route`
+
+> 💡 You can define dynamic routes (routes that have dynamic parameters) as well. This will be a topic of a future session.
+
+> 💡 File based routing can be ambiguous. The files `pages/about/index.js` and `pages/about.js` are both associated with `/about`. In practice, this is rarely a problem. Nevertheless, you should be aware of it.
+
+> 📙 Read more about [**Routing** in the Next.js Docs](https://nextjs.org/docs/routing/introduction).
+
+#### `<Link>` component
+
+For client-side transitions between routes, use the `<Link>` component provided by next/link. Given a `pages` directory with
+
+- `pages/index.js`
+- `pages/about.js`
+- `pages/about/me.js`,
+
+You can link to each of these pages in the following way:
+
+```js
+import Link from "next/link";
+
+export default function Navigation() {
+  return (
+    <ul>
+      <li>
+        <Link href="/">Home</Link>
+      </li>
+      <li>
+        <Link href="/about">About</Link>
+      </li>
+      <li>
+        <Link href="/about/me">Me</Link>
+      </li>
+    </ul>
+  );
+}
+```
+
+> 📙 Read more about [**next/link** in the Next.js Docs](https://nextjs.org/docs/api-reference/next/link).
+
+#### Image Optimaization with `next/image`
+
+Next.js comes with automatic image optimization – the next/image component. This feature, for example, avoids shipping large images to devices with a smaller viewport and images are lazy-loaded by default. Keep in mind that using `<Image>` comes with a little bit of default styling.
+
+Here's an example implementation. Note that the `height` and `width` props should be the desired rendering size, with an aspect ratio identical to the source image.
+
+```js
+import Image from "next/image";
+
+export default function AnimalImage() {
+  <Image
+    src="/images/a_small_dog.jpg"
+    height={144}
+    width={144}
+    alt="A picture of a small dog"
+  />;
+}
+```
+
+When using images from external domains, you need to configure the allowed domains in the `next.config.js` file:
+
+```js
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    domains: ["images.unsplash.com"],
+  },
+};
+```
+
+> 📙 Read more about [configuring **domains** for next/image](https://nextjs.org/docs/api-reference/next/image#domains) and [**next/image** in general in the Next.js Docs](https://nextjs.org/docs/api-reference/next/image).
+
+---
+
+### Resources
+
+- [Next.js Homepage](https://nextjs.org/)
+- [Next.js Docs](https://nextjs.org/docs)
+- [Routing in the Next.js Docs](https://nextjs.org/docs/routing/introduction)
+- [next/link in the Next.js Docs](https://nextjs.org/docs/api-reference/next/link)
+- [next/image in the Next.js Docs](https://nextjs.org/docs/api-reference/next/image)
+- [Difference between a Framework and a Library on freecodecamp](https://www.freecodecamp.org/news/the-difference-between-a-framework-and-a-library-bd133054023f/)
+
+## Next.js Dynamic Routes
+
+### Learning Objectives
+
+- [ ] Understanding the concept of dynamic paths
+- [ ] Knowing how to implement dynamic paths
+- [ ] Knowing how to generate links dynamically
+- [ ] Knowing hot to use imperative routing
+- [ ] Understanding the next/head component
+
+---
+
+### Concept of Dynamic Routes
+
+If your app has many possible routes with repeating patterns it would be hard to impossible to create a JavaScript file per route.
+
+Using dynamic routes you can turn (parts of) the path into dynamic parameters using square brackets. If the URL matches the path, Next.js will make the dynamic query parameters available using the `useRouter` hook.
+
+![Dynamic Routing](./assets/dynamic-routes.excalidraw.png)
+
+### Implementing Dynamic Routes
+
+To create a dynamic route, you can add square brackets around file or folder names in the pages directory respectively: `pages/movies/[categorySlug]/page/[pageNumber].js`.
+
+The following paths map to this example:
+
+- `movies/romance/page/12`
+- - `categorySlug` is `"romance"`
+  - `pageNumber` is `"12"`
+- `movies/action/page/1`
+- - `categorySlug` is `"action"`
+  - `pageNumber` is `"1"`
+- `movies/comedy/page/3`
+
+  - `categorySlug` is `"comedy"`
+  - `pageNumber` is `"3"`
+
+To access the query parameters in a component use the `useRouter` hook imported from `next/router`:
+
+```js
+// pages/movies/categories/[categorySlug]/page/[pageNumber].js
+import { useRouter } from "next/router";
+
+export default function CategoryPage() {
+  const router = useRouter();
+  const { categorySlug, pageNumber } = router.query;
+
+  return (
+    <div>
+      <p>Category Slug: {categorySlug}</p>
+      <p>Page Number: {pageNumber}</p>
+    </div>
+  );
+}
+```
+
+This of course also applies to a simpler example with a single dynamic query parameter.
+
+```js
+// pages/movies/[slug].js
+import { useRouter } from "next/router";
+
+export default function MoviePage() {
+  const router = useRouter();
+  const { slug } = router.query;
+
+  return (
+    <div>
+      <p>Slug: {slug}</p>
+    </div>
+  );
+}
+```
+
+> 💡 The name of the query parameter always maps to the name of the file/directory: `[slug].js` → `const { slug } = router.query;`
+
+> 📙 Read more about [**Dynamic Routes** in the Next.js Docs](https://nextjs.org/docs/routing/dynamic-routes).
+
+### Linking to Dynamic Routes
+
+You can use the `Link`
+component to link to dynamic paths. Use string interpolation with a template string to insert the dynamic query parameters into the path.
+
+Considering a `Movies` component which renders a list of links to all movies, interpolate the `slug` into the path as a query parameter:
+
+```js
+import Link from "next/link";
+
+export default function Movies({ movies }) {
+  return (
+    <ul>
+      {movies.map(({ id, slug, title }) => (
+        <li key={id}>
+          <Link href={`/movies/${slug}`}>{title}</Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+> 📙 Read more about
+> [**Linking to dynamic paths** in the Next.js Docs](https://nextjs.org/docs/routing/introduction#linking-to-dynamic-paths).
+
+### Imperative Routing
+
+Using `<Link>` is the best option whenever the user navigates through the app on their own. There are
+situations, however, where you cannot use a `Link` component because you want to navigate to another
+page programmatically. One example of **non-direct** user interaction is changing the page after submitting a form:
+
+```js
+import { useRouter } from "next/router";
+
+export default function Form() {
+  const router = useRouter();
+
+  function handleSubmit(event) {
+    // some data handling … ✨
+
+    router.push("/home");
+  }
+
+  return <form onSubmit={handleSubmit}>…</form>;
+}
+```
+
+> 📙 Read more about [Routing **Imperatively** in the Next.js Docs](https://nextjs.org/docs/routing/imperatively).
+
+### next/head component
+
+Next.js comes with a built-in `<Head>` component for appending elements to the head of the page. This
+way, you can easily modify the metadata of the page such as the `<title>` HTML tag:
+
+```js
+import Head from "next/head";
+
+export default function Movies() {
+  return (
+    <>
+      <Head>
+        <title>Movies</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <ul>…</ul>
+    </>
+  );
+}
+```
+
+> 📙 Read more about [**next/head** in the Next.js Docs](https://nextjs.org/docs/api-reference/next/head).
+
+---
+
+### Resources
+
+- [Dynamic Routes in the Next.js Docs](https://nextjs.org/docs/routing/dynamic-routes)
+- [Linking to dynamic paths in the Next.js Docs](https://nextjs.org/docs/routing/introduction#linking-to-dynamic-paths)
+- [Routing Imperatively in the Next.js Docs](https://nextjs.org/docs/routing/imperatively)
+- [next/head in the Next.js Docs](https://nextjs.org/docs/api-reference/next/head)
+
+## React Component Testing
+
+### Learning Objectives
+
+- [ ] Understanding the idea of component testing
+- [ ] Knowing how to
+  - render a React component in tests
+  - simulate interaction with a rendered React component in tests
+  - searching for expected elements in the rendered React component
+  - formulate expected results
+- [ ] Having a general understanding of mocks
+
+---
+
+### Why Testing Frontend makes sense
+
+When developing apps we have to test them on a regular basis to ensure everything works as expected and to find bugs before users do.
+
+Manually testing the app by using the UI is time consuming and unreliable. Rendering a part of UI and simulating interactions can be automated in component tests.
+
+This approach tries to interact with the app in the same way a real user would, by searching in the rendered app for certain elements:
+
+- Search for a heading with certain content
+- Search input fields with certain labels and insert text
+- Search for a button with a certain label and click to submit a form
+- Search for an expected result that should be displayed after submit
+
+We can write such tests for each React component in our code.
+
+In a previous session we looked at unit testing, which is concerned with a single unit / function. Component testing falls in the category of integration tests, because it tests how various individual units / functions work together to create a result on user's screens.
+
+Instead of testing the full app or a complete page (this approach would be End-to-End Testing), we create separated smaller tests for individual components.
+
+We place the file including the tests directly besides the component file with the ending `.test.js`.
+
+```
+MyComponent
+├── MyComponent.styled.js
+├── MyComponent.test.js
+└── index.js
+```
+
+---
+
+### Testing Library
+
+The [Testing Library](https://testing-library.com/docs/react-testing-library/intro) enables us to render React components in jest tests, simulate user behavior and check the results after re-rendering the component.
+
+#### Example
+
+##### FahrenheitConverter.js
+
+The component `FahrenheitConverter` renders a heading, a form and result output. If the form has not been submitted yet, a fallback message will be displayed instead of the result. After the form has been submitted the calculation is done and the result is saved in state. This will trigger a re-rendering of the component, so that the result will be displayed.
+
+```jsx
+import { useState } from "react";
+
+export default function FahrenheitConverter() {
+  const [fahrenheit, setFahrenheit] = useState();
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formElements = form.elements;
+    const celsius = formElements.celsius.value;
+
+    setFahrenheit((celsius * 9) / 5 + 32);
+  }
+
+  return (
+    <div>
+      <h1>Temperature Unit Converter</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="celsius">°C</label>
+        <input type="number" id="celsius" name="celsius" />
+        <button>Convert to Fahrenheit</button>
+      </form>
+      {fahrenheit ? (
+        <output>{fahrenheit} °F</output>
+      ) : (
+        <p>Please enter a Celsius value and submit</p>
+      )}
+    </div>
+  );
+}
+```
+
+##### FahrenheitConverter.test.js
+
+There are three tests for this component:
+
+1. Test that the heading is displayed
+2. Test that the fallback message is displayed before the form has been submitted
+3. Test that the form interaction and submit works and the result is calculated correctly and displayed instead of the fallback message.
+
+```jsx
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import FahrenheitConverter from ".";
+
+test("renders a heading", () => {
+  render(<TemperatureUnitConverter />);
+  const heading = screen.getByRole("heading", {
+    name: /temperature unit converter/i,
+  });
+  expect(heading).toBeInTheDocument();
+});
+
+test("renders a fallback message if form is not yet submitted", () => {
+  render(<FahrenheitConverter />);
+  const message = screen.getByText(/please enter a celsius value and submit/i);
+  expect(message).toBeInTheDocument();
+});
+
+test("converts Celsius to Fahrenheit and renders the result", async () => {
+  const user = userEvent.setup();
+
+  render(<FahrenheitConverter />);
+
+  const input = screen.getByLabelText(/°C/i);
+  expect(input).toBeInTheDocument();
+
+  const button = screen.getByRole("button", { name: /convert to fahrenheit/i });
+  expect(button).toBeInTheDocument();
+
+  await user.type(input, "5");
+  await user.click(button);
+
+  const output = screen.getByText(/41 °F/i);
+  expect(output).toBeInTheDocument();
+
+  const message = screen.queryByText(
+    /please enter a celsius value and submit/i
+  );
+  expect(message).not.toBeInTheDocument();
+});
+```
+
+#### Rendering a component
+
+With the [`render`](https://testing-library.com/docs/react-testing-library/api#render) method you can render the `FahrenheitConverter` component initially. Afterwards you can use the [`screen`](https://testing-library.com/docs/queries/about/#screen) method to access the HTML generated by the component.
+
+#### Using Queries
+
+With [`screen`](https://testing-library.com/docs/queries/about/#screen) you can use [queries](https://testing-library.com/docs/queries/about) to search for specific elements you expect to be in the generated HTML.
+
+| Query                                                                 | Description                                                                                                                   |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| [`ByRole`](https://testing-library.com/docs/queries/byrole)           | Search for an element based on their `role` / `aria-*` attribute (for example `button`, `textbox`, `heading`)                 |
+| [`ByLabelText`](https://testing-library.com/docs/queries/bylabeltext) | Search for an element (like an input field) with a given label                                                                |
+| [`ByText`](`https://testing-library.com/docs/queries/bytext`)         | Search for a given text                                                                                                       |
+| [`ByTestId`](https://testing-library.com/docs/queries/bytestid)       | Last resort to search for an element you can't address with other queries. Mark the element with the attribute `data-testid`. |
+
+In most cases you should use queries with `getBy` to immediately fail when the element is not found. Sometimes you like to test whether something is _not_ displayed. Use `queryBy` in this case because it doesn't immediately fail the test but returns `null`.
+
+You can use a string to define a text to search for, like: `getByText("Text Here")`.
+
+You can also place the text in slashes followed by an `i` _instead of_ double quotes for a string, like `getByText(/text here/i)`
+
+This makes your tests more resilient to changes in the implementation: `getByText("Text here")` would start to fail if the component were to change the casing. Because of this, this is a very common convention when writing tests. Even though `/text here/i` may look funny at first, you'll get used to it rather quickly.
+
+The literal expression enclosed in slashes (`/hello world/`) is called a [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions). The `i` modifier at the end tells the regular expression to ignore lower- and uppercase differences. Regular expressions are often used for searching things in large strings and are very powerful. You don't need to dive into them any deeper than shown above to write your tests though.
+
+Using the [Testing Playground](https://testing-playground.com/) will help you to write queries.
+
+#### Simulate user events
+
+You can [simulate how users interact](https://testing-library.com/docs/user-event/intro) with the component. First you need to setup a virtual user with `userEvent.setup()`. Then you can simulate events like `type` or `click`. Don't forget to use `await` with user events.
+
+#### Using Matchers
+
+With [`expect`](https://jestjs.io/docs/expect) you can use [matchers](https://jestjs.io/docs/using-matchers) to formulate a expected result of your test: It's the same concept fot unit testing.
+
+Since we are generating HTML in component tests, you can use some [additional matchers](https://github.com/testing-library/jest-dom#custom-matchers). The `toBeInTheDocument` matcher is used very commonly.
+
+---
+
+### Mocks
+
+[A mock](https://jestjs.io/docs/mock-functions) is a substitute that is used in the tests instead of a original function. Common use cases are:
+
+- Event-handler functions passed as prop to a component
+- Replacing an imported package
+
+Mocks are used to reduce dependencies in a test and to provide a testable environment for a component.
+
+#### Mock Function for Event-Handlers
+
+Consider a `Counter` component that accepts two event-handler functions as prop:
+
+```jsx
+export default function Counter({ onDecrease, onIncrease }) {
+  return (
+    <>
+      <button type="button" onClick={onDecrease}>
+        decrease
+      </button>
+      <button type="button" onClick={onIncrease}>
+        increase
+      </button>
+    </>
+  );
+}
+```
+
+In a test you might want to test if the passed event-handler functions are called when the buttons are clicked. Since your not rendering a complete app in the test, but only this component, you can pass a mock function.
+
+Mock function can be created with `jest.fn()`. This gives you a function you can use with `expect`.
+
+```jsx
+test("should call event-handler functions", async () => {
+  // Creates mock functions
+  const handleDecrease = jest.fn();
+  const handleIncrease = jest.fn();
+
+  const user = userEvent.setup();
+
+  render(<Counter onDecrease={handleDecrease} onIncrease={handleIncrease} />);
+
+  const decreaseButton = screen.getByRole("button", {
+    name: /decrease/i,
+  });
+  const increaseButton = screen.getByRole("button", {
+    name: /increase/i,
+  });
+
+  await user.click(increaseButton);
+  await user.click(decreaseButton);
+  await user.click(increaseButton);
+
+  expect(handleDecrease).toHaveBeenCalledTimes(1);
+  expect(handleIncrease).toHaveBeenCalledTimes(2);
+});
+```
+
+#### Testing Next.js (`useRouter` Mock)
+
+When writing tests for components that use the `useRouter` hook from Next.js, you need to be aware of some stumbling stones. When test are executed they don't run within a real browser. Thus there is no [browser location API](https://developer.mozilla.org/en-US/docs/Web/API/Location) and the context that Next.js uses to provide routing information to all components in the app is not present.
+
+The `useRouter` hook requires the browser location API to work, so it will throw an error and fail the tests.
+
+In order to test components including the `useRouter` hook, you need to write a mock.
+
+A mock is a substitute that is used in the tests instead of the original function. You can replace the `useRouter` hook from `next/router` with a mock like described below. Add the functions / properties of the router that the tested component uses. In a mock, use the simplest possible implementation that makes the tests work. In the following example we assume that the tested components accesses `router.asPath` and calls `router.push`.
+
+```jsx
+import MyComponent from ".";
+/* ... likely more imports here ... */
+
+jest.mock("next/router", () => ({
+  useRouter() {
+    return {
+      push: jest.fn(),
+      asPath: "/",
+    };
+  },
+}));
+
+test("should render", () => {
+  /* ... test here ... */
+});
+
+/* ... likely more tests here ... */
+```
+
+---
+
+### Resources
+
+- [Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Testing Library: render](https://testing-library.com/docs/react-testing-library/api#render)
+- [Testing Library: screen](https://testing-library.com/docs/queries/about/#screen)
+- [Testing Library: Queries](https://testing-library.com/docs/queries/about/)
+- [Testing Playground](https://testing-playground.com/)
+- [Testing Library: UserEvents](https://testing-library.com/docs/user-event/intro)
+- [jest-dom (additional matchers)](https://github.com/testing-library/jest-dom)
+- [Jest: Mock functions](https://jestjs.io/docs/mock-functions)
+
+## React Styled Components
+
+### Learning Objectives
+
+- [ ] Understanding what a CSS-in-JS library is and why we prefer it over normal CSS
+- [ ] Knowing how to use styled components
+
+  - [ ] create basic styled components
+  - [ ] style custom components
+  - [ ] adapt styling based on props
+  - [ ] use nested styles with pseudo-elements and pseudo-classes
+  - [ ] write global styles
+
+- [ ] Knowing how to use fonts from Google with Next.js
+
+---
+
+### What is CSS-in-JS and why do we use it?
+
+CSS-in-JS refers to a collection of ideas to solve complex problems in CSS. There are several libraries which use this approach, one of them is **styled components**. All implementations have in common that they leverage JavaScript as a language for creating styles.
+
+Here's a list of advantages of a CSS-in-JS library like **styled components**:
+
+- automatic critical CSS injected (and nothing more)
+- no class name bugs
+- easier deletion of CSS
+- simple dynamic styling
+- painless maintenance
+- automatic vendor prefixing
+
+> 📙 Read more about the [motivation to use styled components](https://styled-components.com/docs/basics#motivation).
+
+---
+
+### Styling with styled components
+
+#### Basic Styling
+
+To create a styled component,
+
+- import `styled`
+- use it to create a styled component like `ListItem`, and
+- implement the styled component in the return statement of your component.
+
+```js
+//components/List.js
+import styled from "styled-components";
+
+export default function List() {
+  return (
+    <StyledList>
+      <ListItem>Item 1</ListItem>
+      <ListItem>Item 2</ListItem>
+      <ListItem>Item 3</ListItem>
+    </StyledList>
+  );
+}
+
+const ListItem = styled.li`
+  background-color: crimson;
+`;
+
+const StyledList = styled.ul`
+  list-style-type: none;
+`;
+```
+
+> 💡 Note that the name of a styled component is in uppercase (because it's a component), but must not equal the function name; a common naming pattern is to include the word `Styled`.
+
+> 📙 Read more about [basic styling with styled component](https://styled-components.com/docs/basics#getting-started).
+
+#### Styling a Custom Component
+
+Sometimes, there already is a component with predefined styles, but you want to further extend them:
+
+- you might have defined a `Button` component with basic styling yourself [see a good example in the docs](https://styled-components.com/docs/basics#extending-styles) or
+- a framework offers a component you want to use, like the `Link` component from `next/link`:
+
+```js
+import styled from "styled-components";
+import Link from "next/link";
+
+export default function List() {
+  return (
+    <ul>
+      <li>
+        <StyledLink>Let's go somewhere!</StyledLink>
+      </li>
+    </ul>
+  );
+}
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+```
+
+> 📙 Read more about [styling any component](https://styled-components.com/docs/basics#styling-any-component) and .
+
+#### Adapting based on props
+
+To adapt styling based on props, pass a function to a styled component's template literal and use the ternary operator to check the prop:
+
+```js
+import styled from "styled-components";
+
+export default function List({ isOnFire }) {
+  return (
+    <StyledList isOnFire>
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+    </StyledList>
+  );
+}
+
+const StyledList = styled.ul`
+  list-style-type: ${(props) => (props.isOnFire ? "🔥" : "❄️")};
+  /* or with destructuring: */
+  list-style-type: ${({ isOnFire }) => (isOnFire ? "🔥" : "❄️")};
+`;
+```
+
+If you want to set several CSS properties based on the same prop, you can use the `css` helper:
+
+```js
+import styled, { css } from "styled-components";
+
+const StyledList = styled.ul`
+  ${(props) =>
+    props.isOnFire &&
+    css`
+      list-style-type: "🔥";
+      background-color: red;
+      color: white;
+    `}
+`;
+```
+
+> 💡 Besides others, the advantages of the `css` helper is syntax highlighting and performance optimization.
+
+> 📙 Read more about [styling based on props](https://styled-components.com/docs/basics#adapting-based-on-props).
+
+#### Pseudoelements and Pseudoselectors
+
+To apply pseudoelements, pseudoselectors, or nesting styles, you can use a single ampersand `&` which refers to the component itself:
+
+```js
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  &:hover {
+    color: red;
+  }
+`;
+```
+
+> 📙 Read more about [pseudoelements and pseudoselectors](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting).
+
+#### Global Styling
+
+To implement global styling, you'll need to create a global styled component. To keep the structure of the project clear, create a `styles.js` file in the root of the project for this:
+
+```js
+// styles.js
+import { createGlobalStyle } from "styled-components";
+
+export default createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+      Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+	// more global styles here...
+`;
+```
+
+Import the `GlobalStyle` component into the `pages/_app.js` file and render it above the `<Component />`:
+
+```js
+// pages/_app.js
+import { GlobalStyle } from "../styles";
+
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </>
+  );
+}
+```
+
+> 💡 There is no consensus as to where to put the `GlobalStyle` component. The decision for a `styles.js` file was made to mirror the fact that, until now, global styles were written in a `styles.css` file.
+
+> 📙 Read more about [createGlobalStyle](https://styled-components.com/docs/api#createglobalstyle).
+
+#### Google Fonts GDPR- (DSGVO-) compliant integration
+
+Next.js features the `@next/font` npm package. It will automatically optimize your fonts (including custom fonts) and **remove external network requests for improved privacy and performance** by self-hosting Google fonts.
+
+You need to [install `@next/font` in your project](https://nextjs.org/docs/basic-features/font-optimization#usage) first. To implement a font family, import it where needed and use it inside the styled component.
+
+The following example sets the font-family in the `GlobalStyle` component for the HTML `body` element:
+
+```js
+import { createGlobalStyle } from "styled-components";
+import { Open_Sans } from "@next/font/google";
+
+const openSans = Open_Sans({ subsets: ["latin"] });
+
+export default createGlobalStyle`
+  // ... some globals styles here...
+  }
+  body {
+    margin: 0;
+    font-family: ${openSans.style.fontFamily}; 
+    padding: 2rem;
+  }
+	// ... some more global styles here ...
+`;
+```
+
+> 📙 Read more about [Google Fonts in Next.js](https://nextjs.org/docs/basic-features/font-optimization) and check the [api reference for `@next/font`](https://nextjs.org/docs/api-reference/next/font).
+
+---
+
+### Resources
+
+- [What actually is CSS-in-JS?](https://medium.com/dailyjs/what-is-actually-css-in-js-f2f529a2757)
+- [styled components](https://styled-components.com/)
+- [Next.js: Font Optimization](https://nextjs.org/docs/basic-features/font-optimization)
+- [Google Fonts](https://fonts.google.com/)
+
+## React Global State
+
+### Learning Objectives
+
+- [ ] Understanding prop drilling
+- [ ] Knowing naming conventions with prop drilling
+- [ ] Knowing the concept of global state
+
+---
+
+### Lifting State Up
+
+In many situations a state that already exists in one component is also needed in another component. The components must share a common state. To solve this you need to move the state up the component hierarchy to the first shared parent component. This is called "lifting state up". From this point, state variables or functions to change the state are passed to lower-level components via props.
+
+You find more information on this topic in the [React State 2 handout](../react-state-2/react-state-2.md).
+
+---
+
+### Prop drilling
+
+Individual components consuming state variables and their shared ancestor, where the state is defined, can be far away from each other in the component hierarchy. The consequence is that state variables must be passed via props through several other components until they arrive in the target component. This is called "prop drilling".
+
+Consider the following example:
+
+```jsx
+function App() {
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
+  return <ProductsPage userIsLoggedIn={userIsLoggedIn} />;
+}
+
+function ProductsPage({ userIsLoggedIn }) {
+  return <ProductsList userIsLoggedIn={userIsLoggedIn} />;
+}
+
+function ProductsList({ userIsLoggedIn }) {
+  return products.map((product) => (
+    <ProductCard {...product} userIsLoggedIn={userIsLoggedIn} />
+  ));
+}
+
+function ProductCard({ userIsLoggedIn }) {
+  return <ProductActions userIsLoggedIn={userIsLoggedIn} />;
+}
+
+function ProductActions({ userIsLoggedIn }) {
+  return userIsLoggedIn ? (
+    <button>One-click Buy</button>
+  ) : (
+    <button>Add to Basket</button>
+  );
+}
+```
+
+The state variable `userIsLoggedIn` is defined in the `App` component. It is passed down four times until it can be used in the `ProductActions` component.
+
+Imagine there are many more components in this app, some of which also need to know if a user is logged in or not.
+
+Prop drilling through a few levels is perfectly fine. However, if the path gets longer and several state variables are passed via props, the complexity increases and the maintainability of the code is reduced. On the way, passing each prop must not be forgotten in any component.
+
+---
+
+### Naming conventions for props and functions
+
+In the [React Props handout](../react-props/react-props.md) you will find general information about the naming of variables and functions that are passed via props.
+
+In the context of prop drilling, be careful not to rename props halfway through. If a prop is renamed, the logical reference might be lost, which makes the code harder to understand.
+
+Although we recommend prefixing function names `handle` and corresponding props with `on`, you don't need to rename drilled props in every component along the way.
+
+A solution like this is easier to read:
+
+```jsx
+function App() {
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
+  function handleLogIn() {
+    setUserIsLoggedIn(true);
+  }
+
+  return <Layout handleLogIn={handleLogIn} />;
+}
+
+function Layout({ handleLogIn }) {
+  return <Header onLogIn={handleLogIn} />;
+}
+
+function Header({ onLogIn }) {
+  return <button onClick={onLogIn}>Log In</button>;
+}
+```
+
+---
+
+### State management libraries
+
+In the React ecosystem, a variety of different libraries have evolved to simplify the handling of complex state. To avoid heavy prop drilling, the concept of "global state" is an established solution.
+
+The idea: state is not defined in a component and passed through via props, but defined outside the component hierarchy. Each component can access the global state.
+
+There are many libraries that offer implementations for global state. We recommend ["zustand"](https://github.com/pmndrs/zustand). The various libraries differ in some details, but the idea of global state is common.
+
+With "zustand" the above example would look like this. Passing down the `userIsLoggedIn` is no longer required.
+
+```jsx
+import create from "zustand";
+
+const useUserStore = create((set) => ({
+  isLoggedIn: false,
+  logIn: () => set(() => ({ isLoggedIn: true })),
+  logOut: () => set(() => ({ isLoggedIn: false })),
+}));
+
+function App() {
+  return <ProductsList />;
+}
+
+function ProductsPage() {
+  return <ProductsList />;
+}
+
+function ProductsList() {
+  return products.map((product) => <ProductCard {...product} />);
+}
+
+function ProductCard() {
+  return <ProductActions />;
+}
+
+function ProductActions() {
+  const userIsLoggedIn = useUserStore((state) => state.isLoggedIn);
+
+  return userIsLoggedIn ? (
+    <button>One-click Buy</button>
+  ) : (
+    <button>Add to Basket</button>
+  );
+}
+```
+
+> ❗️ Using global state does not mean that you should avoid prop drilling everywhere in your app. It would be an anti-pattern to store all data in global state.
+>
+> Think carefully about what data really needs to be available globally for many components. Only such data should be stored in global state.
+>
+> If the state only refers to a part of your app, it should be defined locally in a component and passed on via props.
+
+---
+
+### Resources
+
+- [zustand on GitHub](https://github.com/pmndrs/zustand)
+
+## React Immutable State
+
+### Learning Objectives
+
+- [ ] Understanding why you should never mutate state directly
+- [ ] Working with nested arrays and objects in state
+- [ ] Knowing the `useImmer` hook
+
+---
+
+### Never mutate state
+
+In the session **React State 3** we discussed how to work with objects and arrays stored in state.
+
+As you have learned you cannot change (mutate) data stored in state directly. You have to treat the state as **read only**. To change state you call the setter function and pass the complete next state.
+
+Consider an object like this in state:
+
+```js
+const [user, setUser] = useState({
+  name: "John Doe",
+  email: "john@doe.com",
+});
+```
+
+You might be tempted to mutate a value in the object and pass it to the setter function.
+
+```js
+user.email = "john_doe@example.com"; // ❌ direct state mutation: don't try this at home!
+setUser(user);
+```
+
+**This code will not work as expected**: it mutates the object stored in state directly!
+
+When you call the setter function, React checks if the object in state has changed and the UI needs to be updated. Since you mutated the previous state object, it's equal to the new state you passed to the setter function. React won't recognize a difference and won't update the UI.
+
+Therefore, you need to make a copy of the data using the spread syntax and apply the changes to the copy. This way you won't mutate the previous state object.
+
+```js
+setUser({
+  ...user,
+  email: "john_doe@example.com",
+});
+```
+
+---
+
+### Updating nested states
+
+It can get a bit complicated when you need to change data in a deeper nested state.
+
+```js
+const [user, setUser] = useState({
+  name: "John Doe",
+  contact: {
+    email: "john@doe.com",
+    phone: {
+      mobile: "+001111111111",
+      work: "+001234567890",
+    },
+  },
+});
+```
+
+When `user.contact.phone.mobile` should be changed, you need to create a copy of each level.
+
+```js
+setUser({
+  ...user,
+  contact: {
+    ...user.contact,
+    phone: {
+      ...user.contact.phone,
+      mobile: "+009999999999",
+    },
+  },
+});
+```
+
+This code works totally fine! However, you need to write a lot of code to change a single value.
+
+The [`immer`](https://immerjs.github.io/immer/) library helps you updating values in deeper nested states.
+
+It will create a complete copy of the previous state for you. This copy is the `draft` for the next state. Since its a copy you can apply mutations in any way you like. The `immer` library will take care to update the state accordingly.
+
+---
+
+### Using `immer` in React: `useImmer` hook
+
+The [`useImmer` hook](https://github.com/immerjs/use-immer) let's you add `immer` easily to React components.
+
+- Instead of calling `useState` to declare a state, you call `useImmer`
+- The returned function should be prefixed with `update` instead of `set`.
+
+The previous example looks like this with the `userImmer` hook.
+
+```js
+// useState → useImmer
+// setUser → updateUser
+const [user, updateUser] = useImmer({
+  name: "John Doe",
+  contact: {
+    email: "john@doe.com",
+    phone: {
+      mobile: "+001111111111",
+      work: "+001234567890",
+    },
+  },
+});
+```
+
+When you call the `update` function, you pass a callback. The callback receives a `draft` for the next state as parameter. You can apply mutations to the `draft` directly.
+
+```js
+updateUser((draft) => {
+  // Mutate the draft directly
+  draft.contact.phone.mobile = "+009999999999";
+});
+```
+
+> 💡 You can find a good guide on [update patterns](https://immerjs.github.io/immer/update-patterns) in the `immer` docs.
+
+---
+
+### Working with objects in arrays
+
+The examples above focusses on mutations in an object. However, in many applications you are likely to work with objects nested in arrays.
+
+Your state might have such a shape:
+
+```js
+const [users, setUsers] = useState([
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@doe.com",
+  },
+  {
+    id: 2,
+    name: "Jane Doe",
+    email: "jane@doe.com",
+  },
+  {
+    id: 3,
+    name: "James Doe",
+    email: "james@doe.com",
+  },
+]);
+```
+
+You can perform an update to change the `email` of a user with the `id` of `1` like this:
+
+```js
+setUsers(
+  users.map((user) =>
+    user.id === 1
+      ? {
+          ...user,
+          email: "john_doe@example.com",
+        }
+      : user
+  )
+);
+```
+
+The same operation with the `update` function provided by the `useImmer` hook looks like this:
+
+```js
+updateUsers((draft) => {
+  const user = draft.find((user) => user.id === 1);
+  user.email = "john_doe@example.com";
+});
+```
+
+The exact code you need to write depends heavily on the type of operation (update, insert, delete) and on the shape of the data you store in state.
+
+Whether to use `immer` or not depends on personal preference and on the complexity of the data structure. With deeper nested structures using `immer` might allow you to create simpler code.
+
+---
+
+### Resources
+
+- [React docs: Updating Objects in State](https://react.dev/learn/updating-objects-in-state)
+- [useImmer hook](https://github.com/immerjs/use-immer)
+- [Immer: update patterns](https://immerjs.github.io/immer/update-patterns)
