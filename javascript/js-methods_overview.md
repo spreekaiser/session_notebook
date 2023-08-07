@@ -2,10 +2,10 @@
 
 Which function returns which value?
 
-## Boolean
+## [Boolean-Methods]()
 
-- [ ] []()
-- [ ] []()
+- [ ] [toString()](#tostring)
+- [ ] [valueOf()](#valueof)
 
 ## [String-Methods](#string-methods-1)
 
@@ -36,10 +36,21 @@ Which function returns which value?
 
 - [ ] [split()](#split)
 
-## Number
+## [Math-Methods for numbers]()
 
-- [ ] []()
-- [ ] []()
+### all methods return numbers
+
+- [ ] [Math.abs()](#mathabs)
+- [ ] [Math.ceil()](#mathceil)
+- [ ] [Math.floor()](#mathfloor)
+- [ ] [Math.max()](#mathmax)
+- [ ] [Math.min()](#mathmin)
+- [ ] [Math.pow()](#mathpow)
+- [ ] [Math.random()](#mathrandom)
+- [ ] [Math.round()](#mathround)
+- [ ] [Math.sign()](#mathsign)
+- [ ] [Math.sqrt()](#mathsqrt)
+- [ ] [Math.trunc()](#mathtrunc)
 
 ## [Array-Methods](#array-methods-1)
 
@@ -47,38 +58,149 @@ Which function returns which value?
 
 - [ ] [forEach()](#foreach)
 
-### returns a number
-
-- [ ] [findeIndex()]()
-
-### returns an array
-
-- [ ] [filter()]()
-- [ ] [map()](#map)
-
-### returns the same modified array
-
-- [ ] [sort()]()
-- [ ] [fill()]()
-
-### returns the first arrays element
-
-- [ ] [find()]()
-
 ### returns a boolean
 
 - [ ] [some()]()
 - [ ] [every()]()
 - [ ] [includes()]()
+- [ ] [isArray()]()
+- [ ] [some()]()
+
+### returns a String
+
+- [ ] [join()]()
+
+### returns a number
+
+- [ ] [at()]()
+- [ ] [findIndex()]()
+- [ ] [push()]()
+- [ ] [unshift()]()
+
+### returns an array
+
+- [ ] [concat()]()
+- [ ] [flat()]()
+- [ ] [filter()]()
+- [ ] [from()]()
+- [ ] [map()](#map)
+- [ ] [of()]()
+- [ ] [slice()]()
 - [ ] []()
 
+### returns the same modified array
+
+- [ ] [fill()]()
+- [ ] [sort()]()
+
+### returns element of the array
+
+- [ ] [find()]()
+- [ ] [findLast()]()
+- [ ] [pop()]()
+- [ ] [shift()]()
+
+### returns an object
+
+- [ ] [entries()]()
+- [ ] [values()]()
+
+## [Object-Methods]()
+
+### returns a boolean
+
+- [ ] []()
+- [ ] [hasOwn()]()
+- [ ] [is()]()
+- [ ] [frozen()]()
+- [ ] [isPrototypeOf()]()
+- [ ] [isSealed()]()
+
+### returns a string object
+
+- [ ] [toString()]()
 - [ ] []()
 - [ ] []()
 
-## Object
+### returns an array
 
 - [ ] []()
-- [ ] []()
+- [ ] [entries()]()
+- [ ] [keys()]()
+- [ ] [values()]()
+
+### returns an object
+
+- [ ] [assign()]()
+- [ ] [create()]()
+- [ ] [fromEntries()]()
+- [ ] [seal()]()
+- [ ] [valueOf()]()
+
+## Boolean-Methods
+
+- ### toString()
+
+The `toString()` method returns a string representing the specified boolean value.
+
+The Boolean object overrides the `toString` method of Object; it does not inherit
+`Object.prototype.toString()`. For Boolean values, the `toString` method returns a
+string representation of the boolean value, which is either `"true"` or `"false"`.
+
+The `toString()` method requires its this value to be a Boolean primitive or wrapper object.
+It throws a TypeError for other this values without attempting to coerce them to boolean values.
+
+Because Boolean doesn't have a [@@toPrimitive]() method, JavaScript calls the `toString()`
+method automatically when a Boolean object is used in a context expecting a string, such
+as in a template literal. However, boolean primitive values do not consult the `toString()`
+method to be coerced to strings — rather, they are directly converted using the same algorithm
+as the initial `toString()` implementation.
+
+```js
+const flag1 = new Boolean(true);
+console.log(flag1.toString()); // Expected output: "true"
+
+const flag2 = new Boolean(1);
+console.log(flag2.toString()); // Expected output: "true"
+
+Boolean.prototype.toString = () => "Overridden";
+console.log(`${true}`); // "true"
+console.log(`${new Boolean(true)}`); // "Overridden"
+
+const flag = new Boolean(true);
+console.log(flag.toString()); // "true"
+console.log(false.toString()); // "false"
+```
+
+#### Return value
+
+A string representing the specified boolean value.
+
+> #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/toString)
+
+- ### valueOf()
+
+The `valueOf()` method of `Boolean` returns the primitive value of a `Boolean`
+object or literal `Boolean` as a `Boolean` data type.
+
+This method is usually called internally by JavaScript and not explicitly in code.
+
+```js
+const x = new Boolean();
+console.log(x.valueOf()); // Expected output: false
+
+const y = new Boolean("Mozilla");
+console.log(y.valueOf()); // Expected output: true
+
+x = new Boolean();
+myVar = x.valueOf(); // assigns false to myVar
+```
+
+#### Return value
+
+The primitive value of the given Boolean object.
+
+> #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/valueOf)
 
 ## String Methods
 
@@ -621,7 +743,452 @@ A non-negative integer specifying a `limit` on the number of substrings to be in
 
 An Array of strings, split at each point where the `separator` occurs in the given string.
 
-> #### see more about split(): [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
+> #### see more about `split()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
+
+## Math-Methods for numbers
+
+- ### Math.abs()
+
+The Math.abs() static method returns the absolute value of a number.
+Because abs() is a static method of Math, you always use it as Math.abs(),
+rather than as a method of a Math object you created (Math is not a constructor).
+
+```js
+function difference(a, b) {
+  return Math.abs(a - b);
+}
+
+console.log(difference(3, 5)); // Expected output: 2
+console.log(difference(5, 3)); // Expected output: 2
+console.log(difference(1.23456, 7.89012)); // Expected output: 6.6555599999999995
+```
+
+#### Parameters
+
+- **Math.abs**(x)
+
+`x`
+
+A number.
+
+#### Return value
+
+The absolute value of `x`. If `x` is negative (including `-0`), returns `-x`. Otherwise, returns `x`.
+The result is therefore always a positive number or `0`.
+
+> #### see more about `Math.abs()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs)
+
+- ### Math.ceil()
+
+The `Math.ceil()` static method always rounds up and returns the smallest integer greater than or equal to a given number.
+Because `ceil()` is a static method of Math, you always use it as `Math.ceil()`, rather than as a method of a
+`Math` object you created (`Math` is not a constructor).
+
+```js
+console.log(Math.ceil(0.95)); // Expected output: 1
+console.log(Math.ceil(4)); // Expected output: 4
+console.log(Math.ceil(7.004)); // Expected output: 8
+console.log(Math.ceil(-7.004)); // Expected output: -7
+```
+
+#### Parameters
+
+- **Math.ceil**(x)
+
+`x`
+
+A number.
+
+#### Return value
+
+The smallest integer greater than or equal to `x`. It's the same value as `-Math.floor(-x)`.
+
+> #### see more about `Math.ceil()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil)
+
+- ### Math.floor()
+
+The Math.floor() static method always rounds down and returns the largest integer less than
+or equal to a given number. Because floor() is a static method of Math, you always use it as
+Math.floor(), rather than as a method of a Math object you created (Math is not a constructor).
+
+```js
+Math.floor(-Infinity); // -Infinity
+Math.floor(-45.95); // -46
+Math.floor(-45.05); // -46
+Math.floor(-0); // -0
+Math.floor(0); // 0
+Math.floor(4); // 4
+Math.floor(45.05); // 45
+Math.floor(45.95); // 45
+Math.floor(Infinity); // Infinity
+```
+
+#### Decimal adjustment
+
+In this example, we implement a method called `decimalAdjust()` that is an enhancement method of
+`Math.floor()`, `Math.ceil()`, and `Math.round()`. While the three `Math` functions always adjust
+the input to the units digit, `decimalAdjust` accepts an `exp` parameter that specifies the number
+of digits to the left of the decimal point to which the number should be adjusted.
+For example, -1 means it would leave one digit after the decimal point (as in "× 10-1").
+In addition, it allows you to select the means of adjustment — `round`, `floor`, or `ceil` — through the type parameter.
+
+It does so by multiplying the number by a power of 10, then rounding the result to the nearest integer,
+then dividing by the power of 10. To better preserve precision, it takes advantage of Number's
+`toString()` method, which represents large or small numbers in scientific notation (like `6.02e23`).
+
+> #### see more about `Math.floor()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor)
+
+- ### Math.max()
+
+The `Math.max()` static method returns the largest of the numbers given as input parameters, or `-Infinity`
+if there are no parameters.
+Because `max()` is a static method of Math, you always use it as `Math.max()`, rather than as a method
+of a `Math` object you created (`Math` is not a constructor).
+
+`Math.max.length` is `2`, which weakly signals that it's designed to handle at least two parameters.
+
+```js
+console.log(Math.max(1, 3, 2)); // Expected output: 3
+console.log(Math.max(-1, -3, -2)); // Expected output: -1
+
+const array1 = [1, 3, 2];
+console.log(Math.max(...array1)); // Expected output: 3
+```
+
+#### Parameters
+
+- **Math.max**(), **Math.max**(value0), **Math.max**(value0, value1), **Math.max**(value0, value1, /_ …, _/ valueN)
+
+`value1`, `value2`, … , `valueN`
+
+Zero or more numbers among which the largest value will be selected and returned.
+
+#### Return value
+
+The largest of the given numbers. Returns NaN if any of the parameters is or is converted into `NaN`.
+Returns `-Infinity` if no parameters are provided.
+
+> #### see more about `Math.max()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max)
+
+- ### Math.min()
+
+The `Math.min()` static method returns the smallest of the numbers given as input parameters, or `Infinity`
+if there are no parameters.
+Because `min()` is a static method of Math, you always use it as `Math.min()`, rather than as a method of a
+`Math` object you created (`Math` is not a constructor). `Math.min.length` is 2, which weakly signals that
+it's designed to handle at least two parameters.
+
+```js
+console.log(Math.min(2, 3, 1)); // Expected output: 1
+console.log(Math.min(-2, -3, -1)); // Expected output: -3
+
+const array1 = [2, 3, 1];
+console.log(Math.min(...array1)); // Expected output: 1
+```
+
+#### Parameters
+
+`value1`, …, `valueN`
+
+Zero or more numbers among which the lowest value will be selected and returned.
+
+#### Return value
+
+The smallest of the given numbers. Returns NaN if any of the parameters is or is
+converted into `NaN`. Returns `Infinity` if no parameters are provided.
+
+> #### see more about `Math.min()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min)
+
+- ### Math.pow()
+
+The `Math.pow()` static method returns the value of a base raised to a power.
+
+That is `𝙼𝚊𝚝𝚑.𝚙𝚘𝚠 ( 𝚡 , 𝚢 ) = x<sup>y</sup>`
+
+`Math.pow()` is equivalent to the ** operator, except `Math.pow()` only accepts numbers.
+`Math.pow(NaN, 0)` (and the equivalent `NaN ** 0`) is the only case where NaN doesn't 
+propagate through mathematical operations — it returns `1`despite the operand being`NaN`. 
+In addition, the behavior where `base`is`1`and`exponent`is non-finite (±Infinity or`NaN`)
+is different from IEEE 754, which specifies that the result should be 1, whereas JavaScript
+returns NaN to preserve backward compatibility with its original behavior.
+
+Because `pow()` is a static method of `Math`, use it as `Math.pow()`, rather than as a method
+of a `Math` object you created (`Math` is not a constructor).
+
+```js
+console.log(Math.pow(7, 3)); // Expected output: 343
+console.log(Math.pow(4, 0.5)); // Expected output: 2
+console.log(Math.pow(7, -2));
+// Expected output: 0.02040816326530612
+//                  (1/49)
+
+console.log(Math.pow(-7, 0.5)); // Expected output: NaN
+```
+
+#### Parameters
+
+`base`
+
+The `base` number.
+
+`exponent`
+
+The `exponent` number.
+
+#### Return value
+
+A number representing base taken to the power of `exponent`. Returns NaN in one of the following cases:
+
+- `exponent` is `NaN`.
+- `base` is `NaN` and `exponent` is not `0`.
+- `base` is `±1` and `exponent` is `±Infinity`.
+- `base` `< 0` and `exponent` is not an `integer`.
+
+> #### see more about `Math.pow()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow)
+
+- ### Math.random()
+
+The `Math.random()` static method returns a floating-point, pseudo-random number that's greater
+than or equal to `0` and less than `1`, with approximately uniform distribution over that range
+— which you can then scale to your desired range. The implementation selects the initial seed
+to the random number generation algorithm; it cannot be chosen or reset by the user.
+
+```js
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+console.log(getRandomInt(3)); // Expected output: 0, 1 or 2
+console.log(getRandomInt(1)); // Expected output: 0
+console.log(Math.random()); // Expected output: a number from 0 to <1
+```
+
+#### Return value
+
+A floating-point, pseudo-random number between `0` (inclusive) and `1` (exclusive).
+
+##### Getting a random number between 0 (inclusive) and 1 (exclusive)
+
+```js
+function getRandom() {
+  return Math.random();
+}
+```
+
+##### Getting a random number between two values
+
+This example returns a random number between the specified values. The returned value
+is no lower than (and may possibly equal) `min`, and is less than (and not equal) `max`.
+
+```js
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+```
+
+##### Getting a random integer between two values
+
+This example returns a random integer between the specified values. The value
+is no lower than `min` (or the next integer greater than `min` if `min` isn't an integer),
+and is less than (but not equal to) `max`.
+
+```js
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min);
+  // The maximum is exclusive and the minimum is inclusive
+}
+```
+
+##### Getting a random integer between two values, inclusive
+
+While the `getRandomInt()` function above is inclusive at the minimum,
+it's exclusive at the maximum. What if you need the results to be inclusive
+at both the minimum and the maximum? The `getRandomIntInclusive()` function
+below accomplishes that.
+
+```js
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+  // The maximum is inclusive and the minimum is inclusive
+}
+```
+
+> #### -> see more about `Math.random()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+
+- ### Math.round()
+
+The `Math.round()` static method returns the value of a number rounded to the nearest integer.
+
+If the fractional portion of the argument is greater than `0.5`, the argument is rounded to
+the integer with the next higher absolute value. If it is less than `0.5`, the argument is
+rounded to the integer with the lower absolute value. If the fractional portion is exactly `0.5`,
+the argument is rounded to the next integer in the direction of `+∞`.
+
+`Math.round(x)` is not exactly the same as Math.floor(x + `0.5`). When `x` is `-0`, or `-0.5 ≤ x < 0`,
+`Math.round(x)` returns `-0`, while `Math.floor(x + 0.5)` returns `0`. However, neglecting that difference
+and potential precision errors, `Math.round(x)` and `Math.floor(x + 0.5)` are generally equivalent.
+
+Because `round()` is a static method of `Math`, you always use it as `Math.round()`, rather
+than as a method of a `Math` object you created (`Math` has no constructor).
+
+```js
+console.log(Math.round(0.9)); // Expected output: 1
+console.log(Math.round(5.95), Math.round(5.5), Math.round(5.05)); // Expected output: 6 6 5
+console.log(Math.round(-5.05), Math.round(-5.5), Math.round(-5.95)); // Expected output: -5 -5 -6
+
+Math.round(-Infinity); // -Infinity
+Math.round(-20.51); // -21
+Math.round(-20.5); // -20
+Math.round(-0.1); // -0
+Math.round(0); // 0
+Math.round(20.49); // 20
+Math.round(20.5); // 21
+Math.round(42); // 42
+Math.round(Infinity); // Infinity
+```
+
+#### Parameters
+
+`x`
+
+A number.
+
+#### Return value
+
+The value of `x` rounded to the nearest integer.
+
+> #### -> see more about `Math.round()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
+
+- ### Math.sign()
+
+The `Math.sign()` static method returns `1` or `-1`, indicating the sign of the number
+passed as argument. If the input is 0 or `-0`, it will be returned as-is.
+Because `sign()` is a static method of `Math`, you always use it as `Math.sign()`,
+rather than as a method of a `Math` object you created (`Math` is not a constructor).
+
+```js
+console.log(Math.sign(3)); // Expected output: 1
+console.log(Math.sign(-3)); // Expected output: -1
+console.log(Math.sign(0)); // Expected output: 0
+console.log(Math.sign("-3")); // Expected output: -1
+
+Math.sign(3); // 1
+Math.sign(-3); // -1
+Math.sign("-3"); // -1
+Math.sign(0); // 0
+Math.sign(-0); // -0
+Math.sign(NaN); // NaN
+Math.sign("foo"); // NaN
+Math.sign(); // NaN
+```
+
+#### Parameters
+
+- **Math.sign**(x)
+
+`x`
+
+A number.
+
+#### Return value
+
+A number representing the sign of `x`:
+
+- If `x` is positive, returns `1`.
+- If `x` is negative, returns `-`1.
+- If `x` is positive zero, returns `0`.
+- If `x` is negative zero, returns `-`0.
+- Otherwise, returns `NaN`.
+
+> #### -> see more about `Math.sign()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign)
+
+- ### Math.sqrt()
+
+The `Math.sqrt()` static method returns the square root of a number. That is
+
+∀x ≥ 0 , 𝙼𝚊𝚝𝚑.𝚜𝚚𝚛𝚝(𝚡) = √x = the unique y ≥ 0 such that y<sup>2</sup> = x
+
+Because `sqrt()` is a static method of `Math`, you always use it as `Math.sqrt()`,
+rather than as a method of a `Math` object you created (`Math` is not a constructor).
+
+```js
+function calcHypotenuse(a, b) {
+  return Math.sqrt(a * a + b * b);
+}
+
+console.log(calcHypotenuse(3, 4)); // Expected output: 5
+onsole.log(calcHypotenuse(5, 12)); // Expected output: 13
+console.log(calcHypotenuse(0, 0)); // Expected output: 0
+
+Math.sqrt(-1); // NaN
+Math.sqrt(-0); // -0
+Math.sqrt(0); // 0
+Math.sqrt(1); // 1
+Math.sqrt(2); // 1.414213562373095
+Math.sqrt(9); // 3
+Math.sqrt(Infinity); // Infinity
+```
+
+#### Parameters
+
+- **Math.sqrt**(x)
+
+`x`
+
+A number greater than or equal to `0`.
+
+#### Return value
+
+The square root of `x`, a nonnegative number. If `x < 0`, returns `NaN`.
+
+> #### -> see more about `Math.sqrt()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt)
+
+- ### Math.trunc()
+
+The `Math.trunc()` static method returns the integer part of a number by removing any
+fractional digits.
+
+Unlike the other three Math methods: `Math.floor()`, `Math.ceil()` and `Math.round()`,
+the way `Math.trunc()` works is very simple. It truncates (cuts off) the dot and the
+digits to the right of it, no matter whether the argument is a positive or negative number.
+
+Because `trunc()` is a static method of `Math`, you always use it as `Math.trunc()`,
+rather than as a method of a `Math` object you created (`Math` is not a constructor).
+
+```js
+console.log(Math.trunc(13.37)); // Expected output: 13
+console.log(Math.trunc(42.84)); // Expected output: 42
+console.log(Math.trunc(0.123)); // Expected output: 0
+console.log(Math.trunc(-0.123)); // Expected output: -0
+
+Math.trunc(-Infinity); // -Infinity
+Math.trunc("-1.123"); // -1
+Math.trunc(-0.123); // -0
+Math.trunc(-0); // -0
+Math.trunc(0); // 0
+Math.trunc(0.123); // 0
+Math.trunc(13.37); // 13
+Math.trunc(42.84); // 42
+Math.trunc(Infinity); // Infinity
+```
+
+#### Parameters
+
+- **Math.trunc**(x)
+
+`x`
+
+A number.
+
+#### Return value
+
+The integer part of `x`.
+
+> #### -> see more about `Math.trunc()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc)
 
 ## Array-Methods
 
