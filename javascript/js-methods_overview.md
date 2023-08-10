@@ -88,20 +88,20 @@ Which function returns which value?
 
 ### returns the same modified array
 
-- [ ] [fill()]()
-- [ ] [sort()]()
+- [ ] [fill()](#fill)
+- [ ] [sort()](#sort)
 
 ### returns an element of the array
 
-- [ ] [find()]()
-- [ ] [findLast()]()
-- [ ] [pop()]()
-- [ ] [shift()]()
+- [ ] [find()](#find)
+- [ ] [findLast()](#findlast)
+- [ ] [pop()](#pop)
+- [ ] [shift()](#shift)
 
 ### returns an object
 
-- [ ] [entries()]()
-- [ ] [values()]()
+- [ ] [entries()](#entries)
+- [ ] [values()](#values)
 
 ## [Object-Methods]()
 
@@ -2941,3 +2941,967 @@ Zero-based index at which to end extraction, converted to an `integer.slice()` e
 A new array containing the extracted elements.
 
 > #### -> see more about `slice()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+
+- ### fill()
+
+The `fill()` method of Array instances changes all elements within a range of indices in an array
+to a static value. It returns the modified array.
+
+The `fill()` method is a mutating method. It does not alter the length of this, but it will
+change the content of this.
+
+The `fill()` method fills empty slots in sparse arrays with value as well.
+
+The `fill()` method is generic. It only expects the this value to have a length property.
+Although strings are also array-like, this method is not suitable to be applied on them, as strings are immutable.
+
+```js
+const array1 = [1, 2, 3, 4];
+
+// Fill with 0 from position 2 until position 4
+console.log(array1.fill(0, 2, 4));
+// Expected output: Array [1, 2, 0, 0]
+
+// Fill with 5 from position 1
+console.log(array1.fill(5, 1));
+// Expected output: Array [1, 5, 5, 5]
+
+console.log(array1.fill(6));
+// Expected output: Array [6, 6, 6, 6]
+
+console.log([1, 2, 3].fill(4)); // [4, 4, 4]
+console.log([1, 2, 3].fill(4, 1)); // [1, 4, 4]
+console.log([1, 2, 3].fill(4, 1, 2)); // [1, 4, 3]
+console.log([1, 2, 3].fill(4, 1, 1)); // [1, 2, 3]
+console.log([1, 2, 3].fill(4, 3, 3)); // [1, 2, 3]
+console.log([1, 2, 3].fill(4, -3, -2)); // [4, 2, 3]
+console.log([1, 2, 3].fill(4, NaN, NaN)); // [1, 2, 3]
+console.log([1, 2, 3].fill(4, 3, 5)); // [1, 2, 3]
+console.log(Array(3).fill(4)); // [4, 4, 4]
+
+// A single object, referenced by each slot of the array:
+const arr = Array(3).fill({}); // [{}, {}, {}]
+arr[0].hi = "hi"; // [{ hi: "hi" }, { hi: "hi" }, { hi: "hi" }]
+```
+
+#### Using fill() to create a matrix of all 1
+
+This example shows how to create a matrix of all 1, like the `ones()` function of Octave or MATLAB.
+
+```js
+const arr = new Array(3);
+for (let i = 0; i < arr.length; i++) {
+  arr[i] = new Array(4).fill(1); // Creating an array of size 4 and filled of 1
+}
+arr[0][0] = 10;
+console.log(arr[0][0]); // 10
+console.log(arr[1][0]); // 1
+console.log(arr[2][0]); // 1
+```
+
+#### Using fill() to populate an empty array
+
+This example shows how to populate an array, setting all elements to a
+specific value. The end parameter does not have to be specified.
+
+```js
+const tempGirls = Array(5).fill("girl", 0);
+```
+
+#### Calling fill() on non-array objects
+
+The fill() method reads the length property of this and sets the value of
+each integer-keyed property from start to end.
+
+```js
+const arrayLike = { length: 2 };
+console.log(Array.prototype.fill.call(arrayLike, 1));
+// { '0': 1, '1': 1, length: 2 }
+```
+
+#### Parameters
+
+- **fill**(`value`), **fill**(`value`, `start`), **fill**(`value`, `start`, `end`)
+
+`value`
+
+Value to fill the array with. Note all elements in the array will be this exact `value`:
+if `value` is an object, each slot in the array will reference that object.
+
+`start` Optional
+
+Zero-based index at which to `start` filling, converted to an integer.
+
+- Negative index counts back from the `end` of the array — if `start < 0`, `start + array.length` is used.
+- If start < -array.length or `start` is omitted, 0 is used.
+- If start >= array.length, no index is filled.
+
+`end` Optional
+
+Zero-based index at which to `end` filling, converted to an integer. `fill()` fills up to but not including `end`.
+
+- Negative index counts back from the `end` of the array — if `end < 0`, `end + array.length` is used.
+- If `end < -array.length`, `0` is used.
+- If `end >= array.length` or `end` is omitted, `array.length` is used, causing all indices until the `end` to be filled.
+- If `end` is positioned before or at `start` after normalization, no index is filled.
+
+#### Return value
+
+The modified array, filled with `value`.
+
+> #### -> see more about `fill()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)
+
+- ### sort()
+
+The `sort()` method of Array instances sorts the elements of an array in place and returns
+the reference to the same array, now sorted. The default sort order is ascending, built upon
+converting the elements into strings, then comparing their sequences of UTF-16 code units values.
+
+The time and space complexity of the sort cannot be guaranteed as it depends on the implementation.
+
+To sort the elements in an array without mutating the original array, use toSorted().
+
+```js
+const months = ["March", "Jan", "Feb", "Dec"];
+months.sort();
+console.log(months);
+// Expected output: Array ["Dec", "Feb", "Jan", "March"]
+
+const array1 = [1, 30, 4, 21, 100000];
+array1.sort();
+console.log(array1);
+// Expected output: Array [1, 100000, 21, 30, 4]
+```
+
+If `compareFn` is not supplied, all non-`undefined` array elements are sorted by converting them to
+strings and comparing strings in UTF-16 code units order. For example, "banana" comes before "cherry".
+In a numeric sort, 9 comes before 80, but because numbers are converted to strings, "80" comes before "9"
+in the Unicode order. All `undefined` elements are sorted to the end of the array.
+
+The sort() method preserves empty slots. If the source array is sparse, the empty slots are moved to the
+end of the array, and always come after all the `undefined`.
+
+If `compareFn` is supplied, all non-`undefined` array elements are sorted according to the return value of
+the compare function (all `undefined` elements are sorted to the end of the array, with no call to `compareFn`).
+
+| `compareFn`(a, b) return value | sort order                     |
+| ------------------------------ | ------------------------------ |
+| > 0                            | sort a after b, e.g. [b, a]    |
+| < 0                            | sort a before b, e.g. [a, b]   |
+| === 0                          | keep original order of a and b |
+
+So, the compare function has the following form:
+
+```js
+function compareFn(a, b) {
+  if (a is less than b by some ordering criterion) {
+    return -1;
+  }
+  if (a is greater than b by the ordering criterion) {
+    return 1;
+  }
+  // a must be equal to b
+  return 0;
+}
+```
+
+More formally, the comparator is expected to have the following properties, in order to ensure proper sort behavior:
+
+- Pure: The comparator does not mutate the objects being compared or any external state.
+  (This is important because there's no guarantee when and how the comparator will be called,
+  so any particular call should not produce visible effects to the outside.)
+- Stable: The comparator returns the same result with the same pair of input.
+- Reflexive: `compareFn(a, a) === 0`.
+- Anti-symmetric: `compareFn(a, b)` and `compareFn(b, a)` must both be `0` or have opposite signs.
+- Transitive: If `compareFn(a, b)` and `compareFn(b, c)` are both positive, zero, or negative,
+  then `compareFn(a, c)` has the same positivity as the previous two.
+
+A comparator conforming to the constraints above will always be able to return all of `1`, `0`,
+and `-1`, or consistently return `0`. For example, if a comparator only returns `1` and `0`, or only
+returns 0 and `-1`, it will not be able to sort reliably because anti-symmetry is broken.
+A comparator that always returns `0` will cause the array to not be changed at all, but is reliable nonetheless.
+
+The default lexicographic comparator satisfies all constraints above.
+
+To compare numbers instead of strings, the compare function can subtract `b` from `a`.
+The following function will sort the array in ascending order (if it doesn't contain Infinity and `NaN`):
+
+```js
+function compareNumbers(a, b) {
+  return a - b;
+}
+```
+
+The `sort()` method is generic. It only expects the this value to have a length property
+and integer-keyed properties. Although strings are also array-like, this method is not
+suitable to be applied on them, as strings are immutable.
+
+#### Creating, displaying, and sorting an array
+
+The following example creates four arrays and displays the original array,
+then the sorted arrays. The numeric arrays are sorted without a compare function, then sorted using one.
+
+```js
+const stringArray = ["Blue", "Humpback", "Beluga"];
+const numberArray = [40, 1, 5, 200];
+const numericStringArray = ["80", "9", "700"];
+const mixedNumericArray = ["80", "9", "700", 40, 1, 5, 200];
+
+function compareNumbers(a, b) {
+  return a - b;
+}
+
+stringArray.join(); // 'Blue,Humpback,Beluga'
+stringArray.sort(); // ['Beluga', 'Blue', 'Humpback']
+
+numberArray.join(); // '40,1,5,200'
+numberArray.sort(); // [1, 200, 40, 5]
+numberArray.sort(compareNumbers); // [1, 5, 40, 200]
+
+numericStringArray.join(); // '80,9,700'
+numericStringArray.sort(); // ['700', '80', '9']
+numericStringArray.sort(compareNumbers); // ['9', '80', '700']
+
+mixedNumericArray.join(); // '80,9,700,40,1,5,200'
+mixedNumericArray.sort(); // [1, 200, 40, 5, '700', '80', '9']
+mixedNumericArray.sort(compareNumbers); // [1, 5, '9', 40, '80', 200, '700']
+```
+
+#### Sorting array of objects
+
+Arrays of objects can be sorted by comparing the value of one of their properties.
+
+```js
+const items = [
+  { name: "Edward", value: 21 },
+  { name: "Sharpe", value: 37 },
+  { name: "And", value: 45 },
+  { name: "The", value: -12 },
+  { name: "Magnetic", value: 13 },
+  { name: "Zeros", value: 37 },
+];
+
+// sort by value
+items.sort((a, b) => a.value - b.value);
+
+// sort by name
+items.sort((a, b) => {
+  const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+  const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+
+  // names must be equal
+  return 0;
+});
+```
+
+Sorting non-ASCII characters
+
+For sorting strings with non-ASCII characters, i.e. strings with accented characters
+(e, é, è, a, ä, etc.), strings from languages other than English, use `String.prototype.localeCompare()`.
+This function can compare those characters so they appear in the right order.
+
+```js
+const items = ["réservé", "premier", "communiqué", "café", "adieu", "éclair"];
+items.sort((a, b) => a.localeCompare(b));
+
+// items is ['adieu', 'café', 'communiqué', 'éclair', 'premier', 'réservé']
+```
+
+#### Sorting with map
+
+The compareFn can be invoked multiple times per element within the array.
+Depending on the compareFn's nature, this may yield a high overhead. The more work a
+compareFn does and the more elements there are to sort, it may be more efficient to
+use `map()` for sorting. The idea is to traverse the array once to extract the actual
+values used for sorting into a temporary array, sort the temporary array,
+and then traverse the temporary array to achieve the right order.
+
+```js
+// the array to be sorted
+const data = ["delta", "alpha", "charlie", "bravo"];
+
+// temporary array holds objects with position and sort-value
+const mapped = data.map((v, i) => {
+  return { i, value: someSlowOperation(v) };
+});
+
+// sorting the mapped array containing the reduced values
+mapped.sort((a, b) => {
+  if (a.value > b.value) {
+    return 1;
+  }
+  if (a.value < b.value) {
+    return -1;
+  }
+  return 0;
+});
+
+const result = mapped.map((v) => data[v.i]);
+```
+
+There is an open source library available called mapsort which applies this approach.
+
+#### sort() returns the reference to the same array
+
+The `sort()` method returns a reference to the original array, so mutating
+the returned array will mutate the original array as well.
+
+```js
+const numbers = [3, 1, 4, 1, 5];
+const sorted = numbers.sort((a, b) => a - b);
+// numbers and sorted are both [1, 1, 3, 4, 5]
+sorted[0] = 10;
+console.log(numbers[0]); // 10
+```
+
+In case you want `sort()` to not mutate the original array, but return a
+`shallow-copied array` like other array methods (e.g. `map()`) do, use the `toSorted()` method.
+Alternatively, you can do a shallow copy before calling `sort()`, using the spread syntax or `Array.from()`.
+
+```js
+const numbers = [3, 1, 4, 1, 5];
+// [...numbers] creates a shallow copy, so sort() does not mutate the original
+const sorted = [...numbers].sort((a, b) => a - b);
+sorted[0] = 10;
+console.log(numbers[0]); // 3
+```
+
+#### Parameters
+
+- **sort**(), **sort**(`compareFn`)
+
+`compareFn` Optional
+
+A function that defines the sort order. The return value should be a number whose sign
+indicates the relative order of the two elements: negative if `a` is less than `b`, positive
+if `a` is greater than `b`, and zero if they are equal. `NaN` is treated as `0`.
+The function is called with the following arguments:
+
+`a`
+
+The first element for comparison. Will never be `undefined`.
+
+`b`
+
+The second element for comparison. Will never be `undefined`.
+
+If omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
+
+#### Return value
+
+The reference to the original array, now sorted. Note that the array is sorted in place, and no copy is made.
+
+> #### -> see more about `sort()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
+
+- ### find()
+
+The `find()` method of Array instances returns the first element in the provided array
+that satisfies the provided testing function. If no values satisfy the testing function,
+undefined is returned.
+
+- If you need the index of the found element in the array, use `findIndex()`.
+- If you need to find the index of a value, use `indexOf()`. (It's similar to `findIndex()`,
+  but checks each element for equality with the value instead of using a testing function.)
+- If you need to find if a value exists in an array, use `includes()`. Again, it checks
+  each element for equality with the value instead of using a testing function.
+- If you need to find if any element satisfies the provided testing function, use `some()`.
+
+```js
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find((element) => element > 10);
+
+console.log(found);
+// Expected output: 12
+```
+
+The `find()` method is an iterative method. It calls a provided `callbackFn` function
+once for each element in an array in ascending-index order, until `callbackFn` returns
+a truthy value. `find()` then returns that element and stops iterating through the array.
+If `callbackFn` never returns a truthy value, `find()` returns undefined.
+
+`callbackFn` is invoked for every index of the array, not just those with assigned values.
+Empty slots in sparse arrays behave the same as undefined.
+
+`find()` does not mutate the array on which it is called, but the function provided as
+`callbackFn` can. Note, however, that the length of the array is saved before the first
+invocation of `callbackFn`. Therefore:
+
+- `callbackFn` will not visit any elements added beyond the array's initial length when the call to `find()` began.
+- Changes to already-visited indexes do not cause `callbackFn` to be invoked on them again.
+- If an existing, yet-unvisited element of the array is changed by `callbackFn`, its value
+  passed to the `callbackFn` will be the value at the time that element gets visited.
+  Deleted elements are visited as if they were undefined.
+
+The `find()` method is generic. It only expects the this value to have a length property and integer-keyed properties.
+
+#### Find an object in an array by one of its properties
+
+```js
+const inventory = [
+  { name: "apples", quantity: 2 },
+  { name: "bananas", quantity: 0 },
+  { name: "cherries", quantity: 5 },
+];
+
+function isCherries(fruit) {
+  return fruit.name === "cherries";
+}
+
+console.log(inventory.find(isCherries));
+// { name: 'cherries', quantity: 5 }
+```
+
+#### Using arrow function and destructuring
+
+```js
+const inventory = [
+  { name: "apples", quantity: 2 },
+  { name: "bananas", quantity: 0 },
+  { name: "cherries", quantity: 5 },
+];
+
+const result = inventory.find(({ name }) => name === "cherries");
+
+console.log(result); // { name: 'cherries', quantity: 5 }
+```
+
+#### Find a prime number in an array
+
+The following example finds an element in the array that is a prime number
+(or returns undefined if there is no prime number):
+
+```js
+function isPrime(element, index, array) {
+  let start = 2;
+  while (start <= Math.sqrt(element)) {
+    if (element % start++ < 1) {
+      return false;
+    }
+  }
+  return element > 1;
+}
+
+console.log([4, 6, 8, 12].find(isPrime)); // undefined, not found
+console.log([4, 5, 8, 12].find(isPrime)); // 5
+```
+
+#### Parameters
+
+- **find**(`callbackFn`), **find**(`callbackFn`, `thisArg`)
+
+`callbackFn`
+
+A function to execute for each `element` in the `array`. It should return a truthy value to indicate a matching `element` has been found, and a falsy value otherwise. The function is called with the following arguments:
+
+`element`
+
+The current `element` being processed in the `array`.
+
+`index`
+
+The `index` of the current `element` being processed in the `array`.
+
+`array`
+
+The `array find()` was called upon.
+
+`thisArg` Optional
+
+A value to use as this when executing `callbackFn`. See iterative methods.
+
+#### Return value
+
+The first element in the array that satisfies the provided testing function.
+Otherwise, undefined is returned.
+
+> #### -> see more about `find()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+
+- ### findLast()
+
+The `findLast()` method of Array instances iterates the array in reverse order
+and returns the value of the first element that satisfies the provided testing function.
+If no elements satisfy the testing function, undefined is returned.
+
+If you need to find:
+
+- the first element that matches, use `find()`.
+- the index of the last matching element in the array, use `findLastIndex()`.
+- the index of a value, use `indexOf()`. (It's similar to `findIndex()`,
+  but checks each element for equality with the value instead of using a testing function.)
+- whether a value exists in an array, use `includes()`. Again, it checks
+  each element for equality with the value instead of using a testing function.
+- if any element satisfies the provided testing function, use `some()`.
+
+```js
+const array1 = [5, 12, 50, 130, 44];
+const found = array1.findLast((element) => element > 45);
+
+console.log(found);
+// Expected output: 130
+```
+
+The `findLast()` method is an iterative method. It calls a provided callbackFn function
+once for each element in an array in descending-index order, until callbackFn returns
+a truthy value. `findLast()` then returns that element and stops iterating through
+the array. If callbackFn never returns a truthy value, `findLast()` returns undefined.
+
+callbackFn is invoked for every index of the array, not just those with assigned values.
+Empty slots in sparse arrays behave the same as undefined.
+
+`findLast()` does not mutate the array on which it is called, but the function provided as
+callbackFn can. Note, however, that the length of the array is saved before the first invocation of callbackFn.
+Therefore:
+
+- callbackFn will not visit any elements added beyond the array's initial length when the call to `findLast()` began.
+- Changes to already-visited indexes do not cause callbackFn to be invoked on them again.
+- If an existing, yet-unvisited element of the array is changed by callbackFn,
+  its value passed to the callbackFn will be the value at the time that element
+  gets visited. Deleted elements are visited as if they were undefined.
+
+The `findLast()` method is generic. It only expects the this value to have a length property and integer-keyed properties.
+
+#### Find last object in an array matching on element properties
+
+This example shows how you might create a test based on the properties of array elements.
+
+```js
+const inventory = [
+  { name: "apples", quantity: 2 },
+  { name: "bananas", quantity: 0 },
+  { name: "fish", quantity: 1 },
+  { name: "cherries", quantity: 5 },
+];
+
+// return true inventory stock is low
+function isNotEnough(item) {
+  return item.quantity < 2;
+}
+
+console.log(inventory.findLast(isNotEnough));
+// { name: "fish", quantity: 1 }
+```
+
+#### Using arrow function and destructuring
+
+The previous example might be written using an arrow function and object destructuring:
+
+```js
+const inventory = [
+  { name: "apples", quantity: 2 },
+  { name: "bananas", quantity: 0 },
+  { name: "fish", quantity: 1 },
+  { name: "cherries", quantity: 5 },
+];
+
+const result = inventory.findLast(({ quantity }) => quantity < 2);
+
+console.log(result);
+// { name: "fish", quantity: 1 }
+```
+
+#### Find the last prime number in an array
+
+The following example returns the last element in the array that is a prime number, or undefined if there is no prime number.
+
+```js
+function isPrime(element) {
+  if (element % 2 === 0 || element < 2) {
+    return false;
+  }
+  for (let factor = 3; factor <= Math.sqrt(element); factor += 2) {
+    if (element % factor === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log([4, 6, 8, 12].findLast(isPrime)); // undefined, not found
+console.log([4, 5, 7, 8, 9, 11, 12].findLast(isPrime)); // 11
+```
+
+#### Parameters
+
+- **findLast**(`callbackFn`), **findLast**(`callbackFn`, `thisArg`)
+
+`callbackFn`
+
+A function to execute for each `element` in the `array`. It should return a
+truthy value to indicate a matching `element` has been found, and a falsy value
+otherwise. The function is called with the following arguments:
+
+`element`
+
+The current `element` being processed in the `array`.
+
+`index`
+
+The `index` of the current `element` being processed in the `array`.
+
+`array`
+
+The `array findLast()` was called upon.
+
+`thisArg` Optional
+
+A value to use as this when executing `callbackFn`. See iterative methods.
+
+#### Return value
+
+The value of the `element` in the `array` with the highest `index` value that satisfies
+the provided testing function; `undefined` if no matching `element` is found.
+
+> #### -> see more about `findLast()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast)
+
+- ### pop()
+
+The `pop()` method of Array instances removes the last element from an array and
+returns that element. This method changes the length of the array.
+
+The `pop()` method removes the last element from an array and returns that value
+to the caller. If you call `pop()` on an empty array, it returns undefined.
+
+`Array.prototype.shift()` has similar behavior to `pop()`, but applied to the first element in an array.
+
+The `pop()` method is a mutating method. It changes the length and the content of this.
+In case you want the value of this to be the same, but return a new array with the
+last element removed, you can use `arr.slice(0, -1)` instead.
+
+The `pop()` method is generic. It only expects the this value to have a length property and
+integer-keyed properties. Although strings are also array-like, this method is not
+suitable to be applied on them, as strings are immutable.
+
+```js
+const plants = ["broccoli", "cauliflower", "cabbage", "kale", "tomato"];
+
+console.log(plants.pop());
+// Expected output: "tomato"
+
+console.log(plants);
+// Expected output: Array ["broccoli", "cauliflower", "cabbage", "kale"]
+
+plants.pop();
+
+console.log(plants);
+// Expected output: Array ["broccoli", "cauliflower", "cabbage"]
+```
+
+#### Removing the last element of an array
+
+The following code creates the myFish array containing four elements, then removes its last element.
+
+```js
+const myFish = ["angel", "clown", "mandarin", "sturgeon"];
+const popped = myFish.pop();
+
+console.log(myFish); // ['angel', 'clown', 'mandarin' ]
+console.log(popped); // 'sturgeon'
+```
+
+#### Calling pop() on non-array objects
+
+The `pop()` method reads the `length` property of this. If the normalized `length` is `0`,
+`length` is set to `0` again (whereas it may be negative or undefined before).
+Otherwise, the property at `length - 1` is returned and deleted.
+
+```js
+const arrayLike = {
+  length: 3,
+  unrelated: "foo",
+  2: 4,
+};
+console.log(Array.prototype.pop.call(arrayLike)); // 4
+console.log(arrayLike); // { length: 2, unrelated: 'foo' }
+
+const plainObj = {};
+// There's no length property, so the length is 0
+Array.prototype.pop.call(plainObj);
+console.log(plainObj); // { length: 0 }
+```
+
+#### Return value
+
+The removed element from the array; `undefined` if the array is empty.
+
+> #### -> see more about `pop()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
+
+- ### shift()
+
+The `shift()` method of Array instances removes the first element from an array
+and returns that removed element. This method changes the length of the array.
+
+```js
+const array1 = [1, 2, 3];
+const firstElement = array1.shift();
+
+console.log(array1); // Expected output: Array [2, 3]
+
+console.log(firstElement); // Expected output: 1
+```
+
+The `shift()` method removes the element at the zeroth index and shifts the values
+at consecutive indexes down, then returns the removed value. If the length property is `0`, `undefined` is returned.
+
+The `pop()` method has similar behavior to `shift()`, but applied to the last element in an array.
+
+The `shift()` method is a mutating method. It changes the length and the content of this.
+In case you want the value of this to be the same, but return a new array with the
+first element removed, you can use `arr.slice(1)` instead.
+
+The `shift()` method is generic. It only expects the this value to have a length property
+and integer-keyed properties. Although strings are also array-like, this method is
+not suitable to be applied on them, as strings are immutable.
+
+#### Removing an element from an array
+
+The following code displays the myFish array before and after removing
+its first element. It also displays the removed element:
+
+```js
+const myFish = ["angel", "clown", "mandarin", "surgeon"];
+console.log("myFish before:", myFish);
+// myFish before: ['angel', 'clown', 'mandarin', 'surgeon']
+
+const shifted = myFish.shift();
+console.log("myFish after:", myFish);
+// myFish after: ['clown', 'mandarin', 'surgeon']
+
+console.log("Removed this element:", shifted);
+// Removed this element: angel
+```
+
+#### Using shift() method in while loop
+
+The shift() method is often used in condition inside while loop.
+In the following example every iteration will remove the next element
+from an array, until it is empty:
+
+```js
+const names = ["Andrew", "Tyrone", "Paul", "Maria", "Gayatri"];
+
+while (typeof (i = names.shift()) !== "undefined") {
+  console.log(i);
+}
+// Andrew, Tyrone, Paul, Maria, Gayatri
+```
+
+#### Return value
+
+The removed element from the array; `undefined` if the array is empty.
+
+> #### -> see more about `shift()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift)
+
+- ### entries()
+
+The `entries()` method of Array instances returns a new array iterator object
+that contains the key/value pairs for each index in the array.
+
+When used on sparse arrays, the `entries()` method iterates empty slots as if they have the value `undefined`.
+
+The `entries()` method is generic. It only expects the this value to have a
+`length` property and integer-keyed properties.
+
+```js
+const array1 = ["a", "b", "c"];
+
+const iterator1 = array1.entries();
+
+console.log(iterator1.next().value);
+// Expected output: Array [0, "a"]
+
+console.log(iterator1.next().value);
+// Expected output: Array [1, "b"]
+```
+
+#### Iterating with index and element
+
+```js
+const a = ["a", "b", "c"];
+
+for (const [index, element] of a.entries()) {
+  console.log(index, element);
+}
+
+// 0 'a'
+// 1 'b'
+// 2 'c'
+```
+
+#### Using a for...of loop
+
+```js
+const array = ["a", "b", "c"];
+const arrayEntries = array.entries();
+
+for (const element of arrayEntries) {
+  console.log(element);
+}
+
+// [0, 'a']
+// [1, 'b']
+// [2, 'c']
+```
+
+#### Iterating sparse arrays
+
+`entries()` will visit empty slots as if they are undefined.
+
+```js
+for (const element of [, "a"].entries()) {
+  console.log(element);
+}
+// [0, undefined]
+// [1, 'a']
+```
+
+#### Calling entries() on non-array objects
+
+The `entries()` method reads the `length` property of this and then accesses
+each property whose key is a nonnegative integer less than `length`.
+
+```js
+const arrayLike = {
+  length: 3,
+  0: "a",
+  1: "b",
+  2: "c",
+  3: "d", // ignored by entries() since length is 3
+};
+for (const entry of Array.prototype.entries.call(arrayLike)) {
+  console.log(entry);
+}
+// [ 0, 'a' ]
+// [ 1, 'b' ]
+// [ 2, 'c' ]
+```
+
+#### Return value
+
+A new iterable iterator object.
+
+> #### -> see more about `entries()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries)
+
+- ### values()
+
+The `values()` method of Array instances returns a new array iterator
+object that iterates the value of each item in the array.
+
+```js
+const array1 = ["a", "b", "c"];
+const iterator = array1.values();
+
+for (const value of iterator) {
+  console.log(value);
+}
+
+// Expected output: "a"
+// Expected output: "b"
+// Expected output: "c"
+```
+
+`Array.prototype.values()` is the default implementation of `Array.prototype[@@iterator]()`.
+
+```js
+Array.prototype.values === Array.prototype[Symbol.iterator]; // true
+```
+
+When used on sparse arrays, the `values()` method iterates empty slots as if they have the value `undefined`.
+
+The `values()` method is generic. It only expects the this value to have a length property and integer-keyed properties.
+
+#### Iteration using for...of loop
+
+Because `values()` returns an iterable iterator, you can use a `for...of` loop to iterate it.
+
+```js
+const arr = ["a", "b", "c", "d", "e"];
+const iterator = arr.values();
+
+for (const letter of iterator) {
+  console.log(letter);
+} // "a" "b" "c" "d" "e"
+```
+
+#### Iteration using next()
+
+Because the return value is also an iterator, you can directly call its `next()` method.
+
+```js
+const arr = ["a", "b", "c", "d", "e"];
+const iterator = arr.values();
+iterator.next(); // { value: "a", done: false }
+iterator.next(); // { value: "b", done: false }
+iterator.next(); // { value: "c", done: false }
+iterator.next(); // { value: "d", done: false }
+iterator.next(); // { value: "e", done: false }
+iterator.next(); // { value: undefined, done: true }
+console.log(iterator.next().value); // undefined
+```
+
+#### Reusing the iterable
+
+The iterable returned from `values()` is not reusable. When `next().done = true` or
+`currentIndex > length`, the `for...of` loop ends, and further iterating it has no effect.
+
+```js
+const arr = ["a", "b", "c", "d", "e"];
+const values = arr.values();
+for (const letter of values) {
+  console.log(letter);
+}
+// "a" "b" "c" "d" "e"
+for (const letter of values) {
+  console.log(letter);
+}
+// undefined
+```
+
+If you use a break statement to end the iteration early, the iterator can resume
+from the current position when continuing to iterate it.
+
+```js
+const arr = ["a", "b", "c", "d", "e"];
+const values = arr.values();
+for (const letter of values) {
+  console.log(letter);
+  if (letter === "b") {
+    break;
+  }
+}
+// "a" "b"
+
+for (const letter of values) {
+  console.log(letter);
+}
+// "c" "d" "e"
+```
+
+#### Mutations during iteration
+
+There are no values stored in the array iterator object returned from `values()`;
+instead, it stores the address of the array used in its creation, and reads the
+currently visited index on each iteration. Therefore, its iteration output depends
+on the value stored in that index at the time of stepping. If the values in the
+array changed, the array iterator object's values change too.
+
+```js
+const arr = ["a", "b", "c", "d", "e"];
+const iterator = arr.values();
+console.log(iterator); // Array Iterator { }
+console.log(iterator.next().value); // "a"
+arr[1] = "n";
+console.log(iterator.next().value); // "n"
+```
+
+#### Return value
+
+A new iterable iterator object.
+
+> #### -> see more about `values()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values)
