@@ -107,25 +107,21 @@ Which function returns which value?
 
 ### returns a boolean
 
-- [ ] []()
-- [ ] [hasOwn()]()
-- [ ] [is()]()
-- [ ] [frozen()]()
-- [ ] [isPrototypeOf()]()
-- [ ] [isSealed()]()
+- [ ] [hasOwn()](#hasown)
+- [ ] [is()](#is)
+- [ ] [isFrozen()](#isfrozen)
+- [ ] [isPrototypeOf()](#isprototypeof)
+- [ ] [isSealed()](#issealed)
 
 ### returns a string object
 
-- [ ] [toString()]()
-- [ ] []()
-- [ ] []()
+- [ ] [toString()](#tostring-2)
 
 ### returns an array
 
-- [ ] []()
-- [ ] [entries()]()
-- [ ] [keys()]()
-- [ ] [values()]()
+- [ ] [entries()](#entries-1)
+- [ ] [keys()](#keys)
+- [ ] [values()](#values-1)
 
 ### returns an object
 
@@ -3905,3 +3901,1052 @@ console.log(iterator.next().value); // "n"
 A new iterable iterator object.
 
 > #### -> see more about `values()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values)
+
+## Object-Methods
+
+- ### hasOwn()
+
+The `Object.hasOwn()` static method returns true if the specified object has the
+indicated property as its own property. If the property is inherited, or does not exist,
+the method returns false.
+
+The `Object.hasOwn()` method returns true if the specified property is a direct
+property of the object — even if the property value is null or undefined.
+The method returns false if the property is inherited, or has not been declared at all.
+Unlike the in operator, this method does not check for the specified property in the object's prototype chain.
+
+It is recommended over `Object.prototype.hasOwnProperty()` because it works for
+objects created using `Object.create(null)` and with objects that have overridden
+the inherited `hasOwnProperty()` method. While it is possible to workaround these
+problems by calling `Object.prototype.hasOwnProperty()` on an external object,
+`Object.hasOwn()` is more intuitive.
+
+```js
+const object1 = {
+  prop: "exists",
+};
+
+console.log(Object.hasOwn(object1, "prop"));
+// Expected output: true
+
+console.log(Object.hasOwn(object1, "toString"));
+// Expected output: false
+
+console.log(Object.hasOwn(object1, "undeclaredPropertyValue"));
+// Expected output: false
+```
+
+#### Using hasOwn to test for a property's existence
+
+The following code shows how to determine whether the example object contains a property named prop.
+
+```js
+const example = {};
+Object.hasOwn(example, "prop"); // false - 'prop' has not been defined
+
+example.prop = "exists";
+Object.hasOwn(example, "prop"); // true - 'prop' has been defined
+
+example.prop = null;
+Object.hasOwn(example, "prop"); // true - own property exists with value of null
+
+example.prop = undefined;
+Object.hasOwn(example, "prop"); // true - own property exists with value of undefined
+```
+
+#### Direct vs. inherited properties
+
+The following example differentiates between direct properties and properties inherited through the prototype chain:
+
+```js
+const example = {};
+example.prop = "exists";
+
+// `hasOwn` will only return true for direct properties:
+Object.hasOwn(example, "prop"); // true
+Object.hasOwn(example, "toString"); // false
+Object.hasOwn(example, "hasOwnProperty"); // false
+
+// The `in` operator will return true for direct or inherited properties:
+"prop" in example; // true
+"toString" in example; // true
+"hasOwnProperty" in example; // true
+```
+
+#### Iterating over the properties of an object
+
+To iterate over the enumerable properties of an object, you should use:
+
+```js
+const example = { foo: true, bar: true };
+for (const name of Object.keys(example)) {
+  // …
+}
+```
+
+But if you need to use `for...in`, you can use `Object.hasOwn()` to skip the inherited properties:
+
+```js
+const example = { foo: true, bar: true };
+for (const name in example) {
+  if (Object.hasOwn(example, name)) {
+    // …
+  }
+}
+```
+
+#### Checking if an Array index exists
+
+The elements of an Array are defined as direct properties, so you can use `hasOwn()` method to check whether a particular index exists:
+
+```js
+const fruits = ["Apple", "Banana", "Watermelon", "Orange"];
+Object.hasOwn(fruits, 3); // true ('Orange')
+Object.hasOwn(fruits, 4); // false - not defined
+```
+
+#### Problematic cases for hasOwnProperty
+
+This section demonstrates that `hasOwn()` is immune to the problems that affect
+hasOwnProperty. Firstly, it can be used with objects that have reimplemented `hasOwnProperty()`:
+
+```js
+const foo = {
+  hasOwnProperty() {
+    return false;
+  },
+  bar: "The dragons be out of office",
+};
+
+if (Object.hasOwn(foo, "bar")) {
+  console.log(foo.bar); // true - re-implementation of hasOwnProperty() does not affect Object
+}
+```
+
+It can also be used to test objects created using `Object.create(null)`.
+These do not inherit from `Object.prototype`, and so `hasOwnProperty()` is inaccessible.
+
+```js
+const foo = Object.create(null);
+foo.prop = "exists";
+if (Object.hasOwn(foo, "prop")) {
+  console.log(foo.prop); // true - works irrespective of how the object is created.
+}
+```
+
+#### Parameters
+
+- **Object.hasOwn**(`obj`, `prop`)
+
+`obj`
+
+The JavaScript object instance to test.
+
+`prop`
+
+The String name or Symbol of the property to test.
+
+#### Return value
+
+true if the specified object has directly defined the specified property. Otherwise false
+
+> #### -> see more about `hasOwn()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
+
+- ### is()
+
+The `Object.is()` static method determines whether two values are the same value.
+
+```js
+console.log(Object.is("1", 1));
+// Expected output: false
+
+console.log(Object.is(NaN, NaN));
+// Expected output: true
+
+console.log(Object.is(-0, 0));
+// Expected output: false
+
+const obj = {};
+console.log(Object.is(obj, {}));
+// Expected output: false
+```
+
+`Object.is()` determines whether two values are the same value. Two values are the same if one of the following holds:
+
+- both `undefined`
+- both `null`
+- both `true` or both `false`
+- both strings of the same `length` with the same characters in the same order
+- both the same object (meaning both values reference the same object in memory)
+- both `BigInts` with the same numeric value
+- both symbols that reference the same symbol value
+- both numbers and
+  - both `+0`
+  - both `-0`
+  - both `NaN`
+  - or both non-zero, not `NaN`, and have the same value
+
+`Object.is()` is not equivalent to the `==` operator. The `==` operator applies various coercions to both sides (if they are not the same type) before testing for equality (resulting in such behavior as `"" == false` being `true`), but `Object.is()` doesn't coerce either value.
+
+`Object.is()` is also not equivalent to the `===` operator. The only difference between `Object.is()` and `===` is in their treatment of signed zeros and NaN values. The `===` operator (and the `==` operator) treats the number values `-0` and `+0` as equal, but treats `NaN` as not equal to each other.
+
+```js
+// Case 1: Evaluation result is the same as using ===
+Object.is(25, 25); // true
+Object.is("foo", "foo"); // true
+Object.is("foo", "bar"); // false
+Object.is(null, null); // true
+Object.is(undefined, undefined); // true
+Object.is(window, window); // true
+Object.is([], []); // false
+const foo = { a: 1 };
+const bar = { a: 1 };
+const sameFoo = foo;
+Object.is(foo, foo); // true
+Object.is(foo, bar); // false
+Object.is(foo, sameFoo); // true
+
+// Case 2: Signed zero
+Object.is(0, -0); // false
+Object.is(+0, -0); // false
+Object.is(-0, -0); // true
+
+// Case 3: NaN
+Object.is(NaN, 0 / 0); // true
+Object.is(NaN, Number.NaN); // true
+```
+
+#### Parameters
+
+- **Object.is**(`value1`, `value2`)
+
+`value1`
+
+The first value to compare.
+
+`value2`
+
+The second value to compare.
+
+#### Return value
+
+A boolean indicating whether or not the two arguments are the same value.
+
+> #### -> see more about `is()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+
+- ### isFrozen()
+
+The `Object.isFrozen()` static method determines if an object is `frozen`.
+
+```js
+const object1 = {
+  property1: 42,
+};
+
+console.log(Object.isFrozen(object1));
+// Expected output: false
+
+Object.freeze(object1);
+
+console.log(Object.isFrozen(object1));
+// Expected output: true
+```
+
+An object is frozen if and only if it is not extensible, all its properties
+are non-configurable, and all its data properties (that is, properties which are
+not accessor properties with getter or setter components) are non-writable.
+
+```js
+// A new object is extensible, so it is not frozen.
+Object.isFrozen({}); // false
+
+// An empty object which is not extensible
+// is vacuously frozen.
+const vacuouslyFrozen = Object.preventExtensions({});
+Object.isFrozen(vacuouslyFrozen); // true
+
+// A new object with one property is also extensible,
+// ergo not frozen.
+const oneProp = { p: 42 };
+Object.isFrozen(oneProp); // false
+
+// Preventing extensions to the object still doesn't
+// make it frozen, because the property is still
+// configurable (and writable).
+Object.preventExtensions(oneProp);
+Object.isFrozen(oneProp); // false
+
+// Deleting that property makes the object vacuously frozen.
+delete oneProp.p;
+Object.isFrozen(oneProp); // true
+
+// A non-extensible object with a non-writable
+// but still configurable property is not frozen.
+const nonWritable = { e: "plep" };
+Object.preventExtensions(nonWritable);
+Object.defineProperty(nonWritable, "e", {
+  writable: false,
+}); // make non-writable
+Object.isFrozen(nonWritable); // false
+
+// Changing that property to non-configurable
+// then makes the object frozen.
+Object.defineProperty(nonWritable, "e", {
+  configurable: false,
+}); // make non-configurable
+Object.isFrozen(nonWritable); // true
+
+// A non-extensible object with a non-configurable
+// but still writable property also isn't frozen.
+const nonConfigurable = { release: "the kraken!" };
+Object.preventExtensions(nonConfigurable);
+Object.defineProperty(nonConfigurable, "release", {
+  configurable: false,
+});
+Object.isFrozen(nonConfigurable); // false
+
+// Changing that property to non-writable
+// then makes the object frozen.
+Object.defineProperty(nonConfigurable, "release", {
+  writable: false,
+});
+Object.isFrozen(nonConfigurable); // true
+
+// A non-extensible object with a configurable
+// accessor property isn't frozen.
+const accessor = {
+  get food() {
+    return "yum";
+  },
+};
+Object.preventExtensions(accessor);
+Object.isFrozen(accessor); // false
+
+// When we make that property non-configurable it becomes frozen.
+Object.defineProperty(accessor, "food", {
+  configurable: false,
+});
+Object.isFrozen(accessor); // true
+
+// But the easiest way for an object to be frozen
+// is if Object.freeze has been called on it.
+const frozen = { 1: 81 };
+Object.isFrozen(frozen); // false
+Object.freeze(frozen);
+Object.isFrozen(frozen); // true
+
+// By definition, a frozen object is non-extensible.
+Object.isExtensible(frozen); // false
+
+// Also by definition, a frozen object is sealed.
+Object.isSealed(frozen); // true
+```
+
+#### Non-object argument
+
+In ES5, if the argument to this method is not an object (a primitive),
+then it will cause a TypeError. In ES2015, it will return true without any
+errors if a non-object argument is passed, since primitives are, by definition, immutable.
+
+```js
+Object.isFrozen(1);
+// TypeError: 1 is not an object (ES5 code)
+
+Object.isFrozen(1);
+// true                          (ES2015 code)
+```
+
+#### Parameters
+
+- **Object.isFrozen**(`obj`)
+
+`obj`
+
+The object which should be checked.
+
+#### Return value
+
+A Boolean indicating whether or not the given object is frozen.
+
+> #### -> see more about `isFrozen()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen)
+
+- ### isPrototypeOf()
+
+The `isPrototypeOf()` method of Object instances checks if this object
+exists in another object's prototype chain.
+
+```js
+function Foo() {}
+function Bar() {}
+
+Bar.prototype = Object.create(Foo.prototype);
+
+const bar = new Bar();
+
+console.log(Foo.prototype.isPrototypeOf(bar));
+// Expected output: true
+console.log(Bar.prototype.isPrototypeOf(bar));
+// Expected output: true
+```
+
+All objects that inherit from Object.prototype (that is, all except
+null-prototype objects) inherit the `isPrototypeOf()` method. This method
+allows you to check whether or not the object exists within another object's
+prototype chain. If the object passed as the parameter is not an object
+(i.e. a primitive), the method directly returns false. Otherwise, the this
+value is converted to an object, and the prototype chain of object is searched
+for the this value, until the end of the chain is reached or the this value is found.
+
+#### Using isPrototypeOf()
+
+This example demonstrates that `Baz.prototype`, `Bar.prototype`,
+`Foo.prototype` and `Object.prototype` exist in the prototype chain for object `baz`:
+
+```js
+class Foo {}
+class Bar extends Foo {}
+class Baz extends Bar {}
+
+const foo = new Foo();
+const bar = new Bar();
+const baz = new Baz();
+
+// prototype chains:
+// foo: Foo --> Object
+// bar: Bar --> Foo --> Object
+// baz: Baz --> Bar --> Foo --> Object
+console.log(Baz.prototype.isPrototypeOf(baz)); // true
+console.log(Baz.prototype.isPrototypeOf(bar)); // false
+console.log(Baz.prototype.isPrototypeOf(foo)); // false
+console.log(Bar.prototype.isPrototypeOf(baz)); // true
+console.log(Bar.prototype.isPrototypeOf(foo)); // false
+console.log(Foo.prototype.isPrototypeOf(baz)); // true
+console.log(Foo.prototype.isPrototypeOf(bar)); // true
+console.log(Object.prototype.isPrototypeOf(baz)); // true
+```
+
+The `isPrototypeOf()` method — along with the instanceof operator — comes
+in particularly handy if you have code that can only function when dealing
+with objects descended from a specific prototype chain; e.g., to guarantee
+that certain methods or properties will be present on that object.
+
+For example, to execute some code that's only safe to run if a `baz` object has
+`Foo.prototype` in its prototype chain, you can do this:
+
+```js
+if (Foo.prototype.isPrototypeOf(baz)) {
+  // do something safe
+}
+```
+
+However, `Foo.prototype` existing in baz's prototype chain doesn't imply baz
+was created using `Foo` as its constructor. For example, `baz` could be directly
+assigned with `Foo.prototype` as its prototype. In this case, if your code reads
+private fields of `Foo` from `baz`, it would still fail:
+
+```js
+class Foo {
+  #value = "foo";
+  static getValue(x) {
+    return x.#value;
+  }
+}
+
+const baz = { __proto__: Foo.prototype };
+
+if (Foo.prototype.isPrototypeOf(baz)) {
+  console.log(Foo.getValue(baz)); // TypeError: Cannot read private member #value from an object whose class did not declare it
+}
+```
+
+The same applies to instanceof. If you need to read private fields in
+a secure way, offer a branded check method using in instead.
+
+```js
+class Foo {
+  #value = "foo";
+  static getValue(x) {
+    return x.#value;
+  }
+  static isFoo(x) {
+    return #value in x;
+  }
+}
+
+const baz = { __proto__: Foo.prototype };
+
+if (Foo.isFoo(baz)) {
+  // Doesn't run, because baz is not a Foo
+  console.log(Foo.getValue(baz));
+}
+```
+
+#### Parameters
+
+- **isPrototypeOf**(`object`)
+
+`object`
+
+The `object` whose prototype chain will be searched.
+
+#### Return value
+
+A boolean indicating whether the calling object (this) lies in the prototype
+chain of object. Directly returns false when object is not an object (i.e. a primitive).
+
+> #### -> see more about `isPrototypeOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf)
+
+- ### isSealed()
+
+The `Object.isSealed()` static method determines if an object is sealed.
+
+```js
+const object1 = {
+  property1: 42,
+};
+
+console.log(Object.isSealed(object1));
+// Expected output: false
+
+Object.seal(object1);
+
+console.log(Object.isSealed(object1));
+// Expected output: true
+```
+
+Returns `true` if the object is sealed, otherwise `false`. An object is sealed
+if it is not extensible and if all its properties are non-configurable and
+therefore not removable (but not necessarily non-writable).
+
+#### Using Object.isSealed
+
+```js
+// Objects aren't sealed by default.
+const empty = {};
+Object.isSealed(empty); // false
+
+// If you make an empty object non-extensible,
+// it is vacuously sealed.
+Object.preventExtensions(empty);
+Object.isSealed(empty); // true
+
+// The same is not true of a non-empty object,
+// unless its properties are all non-configurable.
+const hasProp = { fee: "fie foe fum" };
+Object.preventExtensions(hasProp);
+Object.isSealed(hasProp); // false
+
+// But make them all non-configurable
+// and the object becomes sealed.
+Object.defineProperty(hasProp, "fee", {
+  configurable: false,
+});
+Object.isSealed(hasProp); // true
+
+// The easiest way to seal an object, of course,
+// is Object.seal.
+const sealed = {};
+Object.seal(sealed);
+Object.isSealed(sealed); // true
+
+// A sealed object is, by definition, non-extensible.
+Object.isExtensible(sealed); // false
+
+// A sealed object might be frozen,
+// but it doesn't have to be.
+Object.isFrozen(sealed); // true
+// (all properties also non-writable)
+
+const s2 = Object.seal({ p: 3 });
+Object.isFrozen(s2); // false
+// ('p' is still writable)
+
+const s3 = Object.seal({
+  get p() {
+    return 0;
+  },
+});
+Object.isFrozen(s3); // true
+// (only configurability matters for accessor properties)
+```
+
+#### Non-object argument
+
+In ES5, if the argument to this method is not an object (a primitive),
+then it will cause a TypeError. In ES2015, it will return true without any
+errors if a non-object argument is passed, since primitives are, by definition, immutable.
+
+```js
+Object.isSealed(1);
+// TypeError: 1 is not an object (ES5 code)
+
+Object.isSealed(1);
+// true                          (ES2015 code)
+```
+
+#### Parameters
+
+- **Object.isSealed**(`obj`)
+
+`obj`
+
+The object which should be checked.
+
+#### Return value
+
+A Boolean indicating whether or not the given object is sealed.
+
+> #### -> see more about `isSealed()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed)
+
+- ### toString()
+
+The toString() method of Object instances returns a string representing
+this object. This method is meant to be overridden by derived objects for
+custom type conversion logic.
+
+```js
+function Dog(name) {
+  this.name = name;
+}
+
+const dog1 = new Dog("Gabby");
+
+Dog.prototype.toString = function dogToString() {
+  return `${this.name}`;
+};
+
+console.log(dog1.toString());
+// Expected output: "Gabby"
+```
+
+JavaScript calls the `toString()` method to convert an object to a primitive value.
+You rarely need to invoke the `toString()` method yourself; JavaScript automatically
+invokes it when encountering an object where a primitive value is expected.
+
+This method is called in priority by string conversion, but numeric conversion and
+primitive conversion call `valueOf()` in priority. However, because the base `valueOf()`
+method returns an object, the `toString()` method is usually called in the end,
+unless the object overrides `valueOf()`. For example, `+[1]` returns `1`, because its
+`toString()` method returns `"1"`, which is then converted to a number.
+
+All objects that inherit from `Object.prototype` (that is, all except `null-prototype` objects)
+inherit the `toString()` method. When you create a custom object, you can override
+`toString()` to call a custom method, so that your custom object can be converted to a
+string value. Alternatively, you can add a @@toPrimitive method, which allows even more
+control over the conversion process, and will always be preferred over `valueOf()` or `toString()` for any type conversion.
+
+To use the base `Object.prototype.toString()` with an object that has it overridden
+(or to invoke it on null or undefined), you need to call `Function.prototype.call()`
+or `Function.prototype.apply()` on it, passing the object you want to inspect as the first parameter (called `thisArg`).
+
+```js
+const arr = [1, 2, 3];
+
+arr.toString(); // "1,2,3"
+Object.prototype.toString.call(arr); // "[object Array]"
+```
+
+`Object.prototype.toString()` returns "[object Type]", where Type is the object type.
+If the object has a `Symbol.toStringTag` property whose value is a string,
+that value will be used as the Type. Many built-in objects, including Map and Symbol,
+have a `Symbol.toStringTag`. Some objects predating ES6 do not have `Symbol.toStringTag`,
+but have a special tag nonetheless. They include (the tag is the same as the type name given below):
+
+- Array
+- Function (anything whose typeof returns "function")
+- Error
+- Boolean
+- Number
+- String
+- Date
+- RegExp
+
+The arguments object returns "[object `Arguments`]". Everything else, including user-defined
+classes, unless with a custom `Symbol.toStringTag`, will return "[object `Object`]".
+
+`Object.prototype.toString()` invoked on null and undefined returns [object `Null`]
+and [object `Undefined`], respectively.
+
+#### Overriding toString for custom objects
+
+You can create a function to be called in place of the default `toString()` method.
+The `toString()` function you create should return a string value. If it returns an
+object and the method is called implicitly during type conversion, then its result
+is ignored and the value of a related method, `valueOf()`, is used instead, or a
+TypeError is thrown if none of these methods return a primitive.
+
+The following code defines a Dog class.
+
+```js
+class Dog {
+  constructor(name, breed, color, sex) {
+    this.name = name;
+    this.breed = breed;
+    this.color = color;
+    this.sex = sex;
+  }
+}
+```
+
+If you call the `toString()` method, either explicitly or implicitly, on an
+instance of Dog, it returns the default value inherited from Object:
+
+```js
+const theDog = new Dog("Gabby", "Lab", "chocolate", "female");
+
+theDog.toString(); // "[object Object]"
+`${theDog}`; // "[object Object]"
+```
+
+The following code overrides the default `toString()` method. This method generates
+a string containing the name, breed, color, and sex of the object.
+
+```js
+class Dog {
+  constructor(name, breed, color, sex) {
+    this.name = name;
+    this.breed = breed;
+    this.color = color;
+    this.sex = sex;
+  }
+  toString() {
+    return `Dog ${this.name} is a ${this.sex} ${this.color} ${this.breed}`;
+  }
+}
+```
+
+With the preceding code in place, any time an instance of Dog is used in
+a string context, JavaScript automatically calls the `toString()` method.
+
+```js
+const theDog = new Dog("Gabby", "Lab", "chocolate", "female");
+
+`${theDog}`; // "Dog Gabby is a female chocolate Lab"
+```
+
+#### Using toString() to detect object class
+
+`toString()` can be used with every object and (by default) allows you to get its class.
+
+```js
+const toString = Object.prototype.toString;
+
+toString.call(new Date()); // [object Date]
+toString.call(new String()); // [object String]
+// Math has its Symbol.toStringTag
+toString.call(Math); // [object Math]
+
+toString.call(undefined); // [object Undefined]
+toString.call(null); // [object Null]
+```
+
+Using `toString()` in this way is unreliable; objects can change the behavior of
+`Object.prototype.toString()` by defining a Symbol.toStringTag property,
+leading to unexpected results. For example:
+
+```js
+const myDate = new Date();
+Object.prototype.toString.call(myDate); // [object Date]
+
+myDate[Symbol.toStringTag] = "myDate";
+Object.prototype.toString.call(myDate); // [object myDate]
+
+Date.prototype[Symbol.toStringTag] = "prototype polluted";
+Object.prototype.toString.call(new Date()); // [object prototype polluted]
+```
+
+#### Parameters
+
+By default `toString()` takes no parameters. However, objects that inherit
+from Object may override it with their own implementations that do take
+parameters. For example, the `Number.prototype.toString()` and
+`BigInt.prototype.toString()` methods take an optional radix parameter.
+
+#### Return value
+
+A string representing the object.
+
+> #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString)
+
+- ### entries()
+
+The `Object.entries()` static method returns an array of a given object's
+own enumerable string-keyed property key-value pairs.
+
+```js
+const object1 = {
+  a: "somestring",
+  b: 42,
+};
+
+for (const [key, value] of Object.entries(object1)) {
+  console.log(`${key}: ${value}`);
+}
+
+// Expected output:
+// "a: somestring"
+// "b: 42"
+```
+
+`Object.entries()` returns an array whose elements are arrays corresponding
+to the enumerable string-keyed property key-value pairs found directly upon object.
+This is the same as iterating with a `for...in` loop, except that a `for...in` loop enumerates
+properties in the prototype chain as well. The order of the array returned by
+`Object.entries()` is the same as that provided by a `for...in` loop.
+
+If you only need the property keys, use `Object.keys()` instead. If you only need
+the property values, use `Object.values()` instead.
+
+#### Using Object.entries()
+
+```js
+const obj = { foo: "bar", baz: 42 };
+console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+
+// Array-like object
+const obj = { 0: "a", 1: "b", 2: "c" };
+console.log(Object.entries(obj)); // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
+
+// Array-like object with random key ordering
+const anObj = { 100: "a", 2: "b", 7: "c" };
+console.log(Object.entries(anObj)); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+
+// getFoo is a non-enumerable property
+const myObj = Object.create(
+  {},
+  {
+    getFoo: {
+      value() {
+        return this.foo;
+      },
+    },
+  }
+);
+myObj.foo = "bar";
+console.log(Object.entries(myObj)); // [ ['foo', 'bar'] ]
+```
+
+#### Using Object.entries() on primitives
+
+Non-object arguments are coerced to objects. Only strings may have own
+enumerable properties, while all other primitives return an empty array.
+
+```js
+// Strings have indices as enumerable own properties
+console.log(Object.entries("foo")); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+
+// Other primitives have no own properties
+console.log(Object.entries(100)); // []
+```
+
+Converting an Object to a Map
+
+The `Map()` constructor accepts an iterable of entries. With Object.entries,
+you can easily convert from Object to Map:
+
+```js
+const obj = { foo: "bar", baz: 42 };
+const map = new Map(Object.entries(obj));
+console.log(map); // Map(2) {"foo" => "bar", "baz" => 42}
+```
+
+#### Iterating through an Object
+
+Using array destructuring, you can iterate through objects easily.
+
+```js
+// Using for...of loop
+const obj = { a: 5, b: 7, c: 9 };
+for (const [key, value] of Object.entries(obj)) {
+  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+}
+
+// Using array methods
+Object.entries(obj).forEach(([key, value]) => {
+  console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+});
+```
+
+#### Parameters
+
+- **Object.entries**(`obj`)
+
+`obj`
+
+An object.
+
+#### Return value
+
+An array of the given object's own enumerable string-keyed property key-value pairs.
+Each key-value pair is an array with two elements: the first element is the property
+key (which is always a string), and the second element is the property value.
+
+> #### -> see more about `entries()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+
+- ### keys()
+
+The `Object.keys()` static method returns an array of a given object's
+own enumerable string-keyed property names.
+
+```js
+const object1 = {
+  a: "somestring",
+  b: 42,
+  c: false,
+};
+
+console.log(Object.keys(object1));
+// Expected output: Array ["a", "b", "c"]
+```
+
+`Object.keys()` returns an array whose elements are strings corresponding to the
+enumerable string-keyed property names found directly upon object. This is the
+same as iterating with a `for...in` loop, except that a `for...in` loop enumerates
+properties in the prototype chain as well. The order of the array returned by
+`Object.keys()` is the same as that provided by a `for...in` loop.
+
+If you need the property values, use `Object.values()` instead. If you need both
+the property keys and values, use `Object.entries()` instead.
+
+#### Using Object.keys()
+
+```js
+// Simple array
+const arr = ["a", "b", "c"];
+console.log(Object.keys(arr)); // ['0', '1', '2']
+
+// Array-like object
+const obj = { 0: "a", 1: "b", 2: "c" };
+console.log(Object.keys(obj)); // ['0', '1', '2']
+
+// Array-like object with random key ordering
+const anObj = { 100: "a", 2: "b", 7: "c" };
+console.log(Object.keys(anObj)); // ['2', '7', '100']
+
+// getFoo is a non-enumerable property
+const myObj = Object.create(
+  {},
+  {
+    getFoo: {
+      value() {
+        return this.foo;
+      },
+    },
+  }
+);
+myObj.foo = 1;
+console.log(Object.keys(myObj)); // ['foo']
+```
+
+If you want all string-keyed own properties, including non-enumerable ones,
+see `Object.getOwnPropertyNames()`.
+
+#### Using Object.keys() on primitives
+
+Non-object arguments are coerced to objects. Only strings may have own
+enumerable properties, while all other primitives return an empty array.
+
+```js
+// Strings have indices as enumerable own properties
+console.log(Object.keys("foo")); // ['0', '1', '2']
+
+// Other primitives have no own properties
+console.log(Object.keys(100)); // []
+```
+
+#### Parameters
+
+- **Object.keys**(`obj`)
+
+`obj`
+
+An object.
+
+#### Return value
+
+An array of strings representing the given object's own enumerable string-keyed property keys.
+
+> #### -> see more about `keys()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)
+
+- ### values()
+
+The `Object.values()` static method returns an array of a given
+object's own enumerable string-keyed property values.
+
+```js
+const object1 = {
+  a: "somestring",
+  b: 42,
+  c: false,
+};
+
+console.log(Object.values(object1));
+// Expected output: Array ["somestring", 42, false]
+```
+
+`Object.values()` returns an array whose elements are values of
+enumerable string-keyed properties found directly upon object.
+This is the same as iterating with a `for...in` loop, except that a
+`for...in` loop enumerates properties in the prototype chain as well.
+The order of the array returned by `Object.values()` is the same as
+that provided by a `for...in` loop.
+
+If you need the property keys, use `Object.keys()` instead. If you
+need both the property keys and values, use `Object.entries()` instead.
+
+#### Using Object.values()
+
+```js
+const obj = { foo: "bar", baz: 42 };
+console.log(Object.values(obj)); // ['bar', 42]
+
+// Array-like object
+const arrayLikeObj1 = { 0: "a", 1: "b", 2: "c" };
+console.log(Object.values(arrayLikeObj1)); // ['a', 'b', 'c']
+
+// Array-like object with random key ordering
+// When using numeric keys, the values are returned in the keys' numerical order
+const arrayLikeObj2 = { 100: "a", 2: "b", 7: "c" };
+console.log(Object.values(arrayLikeObj2)); // ['b', 'c', 'a']
+
+// getFoo is a non-enumerable property
+const myObj = Object.create(
+  {},
+  {
+    getFoo: {
+      value() {
+        return this.foo;
+      },
+    },
+  }
+);
+myObj.foo = "bar";
+console.log(Object.values(myObj)); // ['bar']
+```
+
+#### Using Object.values() on primitives
+
+Non-object arguments are coerced to objects. Only strings may have own
+enumerable properties, while all other primitives return an empty array.
+
+```js
+// Strings have indices as enumerable own properties
+console.log(Object.values("foo")); // ['f', 'o', 'o']
+
+// Other primitives have no own properties
+console.log(Object.values(100)); // []
+```
+
+#### Parameters
+
+- **Object.values**(`obj`)
+
+`obj`
+
+An object.
+
+#### Return value
+
+An array containing the given object's own enumerable string-keyed property values.
+
+> #### -> see more about `values()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
