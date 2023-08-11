@@ -294,7 +294,23 @@ console.log(
   } in the sentence`
 );
 // Expected output: "The word "fox" is in the sentence"
+
+[1, 2, 3].includes(2); // true
+[1, 2, 3].includes(4); // false
+[1, 2, 3].includes(3, 3); // false
+[1, 2, 3].includes(3, -1); // true
+[1, 2, NaN].includes(NaN); // true
+["1", "2", "3"].includes(3); // false
 ```
+
+The `includes()` method compares searchElement to elements of the array using
+the SameValueZero algorithm. Values of zero are all considered to be equal,
+regardless of sign. (That is, `-0` is equal to `0`), but false is not considered
+to be the same as 0. NaN can be correctly searched for.
+
+When used on sparse arrays, the `includes()` method iterates empty slots as if they have the value undefined.
+
+The `includes()` method is generic. It only expects the this value to have a length property and integer-keyed properties.
 
 #### Parameters
 
@@ -306,7 +322,7 @@ A string to be searched for within `str`. Cannot be a regex. All values that are
 
 `position` Optional
 
-The `position` within the string at which to begin searching for `searchString`. (Defaults to 0.)
+The `position` within the string at which to begin searching for `searchString`. (Defaults to `0`.)
 
 #### Return value
 
@@ -468,7 +484,7 @@ A new string containing the combined text of the strings provided.
 
 > #### -> see more about `concat()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/concat)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### slice()
 
@@ -513,7 +529,7 @@ A new string containing the extracted section of the string.
 
 > #### -> see more about `slice()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### replace()
 
@@ -560,7 +576,7 @@ A new string, with one, some, or all matches of the `pattern` replaced by the sp
 
 > #### -> see more about `replace()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### substring()
 
@@ -604,7 +620,7 @@ A new string containing the specified part of the given string.
 
 > #### -> see more about `substring()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### toUpperCase()
 
@@ -623,7 +639,7 @@ A new string representing the calling string converted to upper case.
 
 > #### -> seemore about `toUpperCase()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### toLowerCase()
 
@@ -642,7 +658,7 @@ A new string representing the calling string converted to lower case.
 
 > #### -> seemore about `toLowerCase()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### toString()
 
@@ -671,7 +687,7 @@ A string representing the specified string value.
 
 > #### -> seemore about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toString)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### trim()
 
@@ -698,7 +714,7 @@ If neither the beginning or end of `str` has any whitespace, a new string is sti
 
 > #### -> seemore about `trim()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### valueOf()
 
@@ -722,7 +738,7 @@ A string representing the primitive value of a given `String` object.
 
 > #### -> seemore about `valueOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/valueOf)
 >
-> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### split()
 
@@ -941,7 +957,7 @@ converted into `NaN`. Returns `Infinity` if no parameters are provided.
 
 The `Math.pow()` static method returns the value of a base raised to a power.
 
-That is `𝙼𝚊𝚝𝚑.𝚙𝚘𝚠 ( 𝚡 , 𝚢 ) = x<sup>y</sup>`
+That is `𝙼𝚊𝚝𝚑.𝚙𝚘𝚠 ( 𝚡 , 𝚢 )` = x<sup>y</sup>
 
 `Math.pow()` is equivalent to the ** operator, except `Math.pow()` only accepts numbers.
 `Math.pow(NaN, 0)` (and the equivalent `NaN ** 0`) is the only case where NaN doesn't 
@@ -965,6 +981,8 @@ console.log(Math.pow(-7, 0.5)); // Expected output: NaN
 
 #### Parameters
 
+- **Math.pow**(`base`, `exponent`)
+
 `base`
 
 The `base` number.
@@ -975,7 +993,7 @@ The `exponent` number.
 
 #### Return value
 
-A number representing base taken to the power of `exponent`. Returns NaN in one of the following cases:
+A number representing `base` taken to the power of `exponent`. Returns `NaN` in one of the following cases:
 
 - `exponent` is `NaN`.
 - `base` is `NaN` and `exponent` is not `0`.
