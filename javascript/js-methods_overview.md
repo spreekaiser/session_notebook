@@ -1,8 +1,8 @@
 # Javascript Methods Overview
 
-Which function returns which value?
+Which function type returns which value?
 
-## [Boolean-Methods]()
+## [Boolean-Methods](#boolean-methods-1)
 
 - [ ] [toString()](#tostring)
 - [ ] [valueOf()](#valueof)
@@ -36,7 +36,7 @@ Which function returns which value?
 
 - [ ] [split()](#split)
 
-## [Math-Methods for numbers]()
+## [Math-Methods for numbers](#math-methods-for-numbers-1)
 
 ### all methods return numbers
 
@@ -54,7 +54,7 @@ Which function returns which value?
 
 ## [Array-Methods](#array-methods-1)
 
-### without retun value
+### without retuns value
 
 - [ ] [forEach()](#foreach)
 
@@ -103,7 +103,7 @@ Which function returns which value?
 - [ ] [entries()](#entries)
 - [ ] [values()](#values)
 
-## [Object-Methods]()
+## [Object-Methods](#object-methods-1)
 
 ### returns a boolean
 
@@ -125,11 +125,11 @@ Which function returns which value?
 
 ### returns an object
 
-- [ ] [assign()]()
-- [ ] [create()]()
-- [ ] [fromEntries()]()
-- [ ] [seal()]()
-- [ ] [valueOf()]()
+- [ ] [assign()](#assign)
+- [ ] [create()](#create)
+- [ ] [fromEntries()](#fromentries)
+- [ ] [seal()](#seal)
+- [ ] [valueOf()](#valueof-2)
 
 ## Boolean-Methods
 
@@ -171,6 +171,8 @@ console.log(false.toString()); // "false"
 A string representing the specified boolean value.
 
 > #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/toString)
+>
+> #### 👆🏽 go up to [Boolean-Methods](#boolean-methods)
 
 - ### valueOf()
 
@@ -194,7 +196,9 @@ myVar = x.valueOf(); // assigns false to myVar
 
 The primitive value of the given Boolean object.
 
-> #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/valueOf)
+> #### -> see more about `valueOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/valueOf)
+>
+> #### 👆🏽 go up to [Boolean-Methods](#boolean-methods)
 
 ## String Methods
 
@@ -232,6 +236,8 @@ The start position at which searchString is expected to be found (the index of s
 `true` if the given characters are found at the beginning of the string, including when searchString is an empty string; otherwise, `false`.
 
 > #### -> see more about `startsWith()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### endsWith()
 
@@ -270,6 +276,8 @@ The end position at which `searchString` is expected to be found (the index of `
 true if the given characters are found at the end of the string, including when `searchString` is an empty string; otherwise, false.
 
 > #### -> see more about `endsWith()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith#parameters)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### includes()
 
@@ -305,6 +313,8 @@ The `position` within the string at which to begin searching for `searchString`.
 `true` if the search string is found anywhere within the given string, including when `searchString` is an empty string; otherwise, `false`.
 
 > #### -> see more about `includes()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### indexOf()
 
@@ -382,6 +392,8 @@ However, with a second argument whose value is greater than or equal to the stri
 In the former instance, the method behaves as if it found an empty string just after the position specified in the second argument. In the latter instance, the method behaves as if it found an empty string at the end of the calling string.
 
 > #### -> see more about `indexOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf)
+>
+> #### 👆🏽 go up to [String-Methods #returns a number](#returns-a-number)
 
 - ### at()
 
@@ -417,6 +429,8 @@ A String consisting of the single UTF-16 code unit located at the specified posi
 Returns undefined if the given `index` can not be found.
 
 > #### -> see more about `at()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
+>
+> #### 👆🏽 go up to [String-Methods #returns a string](#returns-a-string)
 
 - ### concat()
 
@@ -453,6 +467,8 @@ One or more strings to concatenate to `str`.
 A new string containing the combined text of the strings provided.
 
 > #### -> see more about `concat()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/concat)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### slice()
 
@@ -496,6 +512,8 @@ The index of the first character to exclude from the returned substring.
 A new string containing the extracted section of the string.
 
 > #### -> see more about `slice()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### replace()
 
@@ -541,6 +559,8 @@ If it's a function, it will be invoked for every match and its return value is u
 A new string, with one, some, or all matches of the `pattern` replaced by the specified `replacement`.
 
 > #### -> see more about `replace()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### substring()
 
@@ -583,6 +603,8 @@ The index of the first character to exclude from the returned `substring`.
 A new string containing the specified part of the given string.
 
 > #### -> see more about `substring()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### toUpperCase()
 
@@ -600,6 +622,8 @@ console.log(sentence.toUpperCase());
 A new string representing the calling string converted to upper case.
 
 > #### -> seemore about `toUpperCase()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### toLowerCase()
 
@@ -617,6 +641,8 @@ console.log(sentence.toLowerCase());
 A new string representing the calling string converted to lower case.
 
 > #### -> seemore about `toLowerCase()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### toString()
 
@@ -644,6 +670,8 @@ console.log(`${new String("foo")}`); // "Overridden"
 A string representing the specified string value.
 
 > #### -> seemore about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toString)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### trim()
 
@@ -669,6 +697,8 @@ If neither the beginning or end of `str` has any whitespace, a new string is sti
 (essentially a copy of `str`).
 
 > #### -> seemore about `trim()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### valueOf()
 
@@ -691,6 +721,8 @@ console.log(x.valueOf()); // 'Hello world'
 A string representing the primitive value of a given `String` object.
 
 > #### -> seemore about `valueOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/valueOf)
+>
+> #### 👆🏽 go up to [String-Methods #returns a boolean](#returns-a-boolean)
 
 - ### split()
 
@@ -738,6 +770,8 @@ A non-negative integer specifying a `limit` on the number of substrings to be in
 An Array of strings, split at each point where the `separator` occurs in the given string.
 
 > #### see more about `split()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split)
+>
+> #### 👆🏽 go up to [String-Methods #returns an array](#returns-an-array)
 
 ## Math-Methods for numbers
 
@@ -771,6 +805,8 @@ The absolute value of `x`. If `x` is negative (including `-0`), returns `-x`. Ot
 The result is therefore always a positive number or `0`.
 
 > #### see more about `Math.abs()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.ceil()
 
@@ -798,6 +834,8 @@ A number.
 The smallest integer greater than or equal to `x`. It's the same value as `-Math.floor(-x)`.
 
 > #### see more about `Math.ceil()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.floor()
 
@@ -831,6 +869,8 @@ then dividing by the power of 10. To better preserve precision, it takes advanta
 `toString()` method, which represents large or small numbers in scientific notation (like `6.02e23`).
 
 > #### see more about `Math.floor()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.max()
 
@@ -863,6 +903,8 @@ The largest of the given numbers. Returns NaN if any of the parameters is or is 
 Returns `-Infinity` if no parameters are provided.
 
 > #### see more about `Math.max()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.min()
 
@@ -892,6 +934,8 @@ The smallest of the given numbers. Returns NaN if any of the parameters is or is
 converted into `NaN`. Returns `Infinity` if no parameters are provided.
 
 > #### see more about `Math.min()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.pow()
 
@@ -939,6 +983,8 @@ A number representing base taken to the power of `exponent`. Returns NaN in one 
 - `base` `< 0` and `exponent` is not an `integer`.
 
 > #### see more about `Math.pow()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.random()
 
@@ -1012,6 +1058,8 @@ function getRandomIntInclusive(min, max) {
 ```
 
 > #### -> see more about `Math.random()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.round()
 
@@ -1056,6 +1104,8 @@ A number.
 The value of `x` rounded to the nearest integer.
 
 > #### -> see more about `Math.round()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.sign()
 
@@ -1099,6 +1149,8 @@ A number representing the sign of `x`:
 - Otherwise, returns `NaN`.
 
 > #### -> see more about `Math.sign()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sign)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.sqrt()
 
@@ -1140,6 +1192,8 @@ A number greater than or equal to `0`.
 The square root of `x`, a nonnegative number. If `x < 0`, returns `NaN`.
 
 > #### -> see more about `Math.sqrt()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 - ### Math.trunc()
 
@@ -1183,6 +1237,8 @@ A number.
 The integer part of `x`.
 
 > #### -> see more about `Math.trunc()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc)
+>
+> #### 👆🏽 go up to [Math-Methods](#math-methods-for-numbers)
 
 ## Array-Methods
 
@@ -1233,6 +1289,8 @@ A value to use as this when executing `callbackFn`. See iterative methods.
 undefined
 
 > #### -> see more about `forEach()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#parameters)
+>
+> #### 👆🏽 go up to [Array-Methods #without returns value](#without-retuns-value)
 
 - ### some()
 
@@ -1301,6 +1359,8 @@ A value to use as this when executing `callbackFn`. See iterative methods.
 true if the callback function returns a truthy value for at least one element in the array. Otherwise, false.
 
 > #### -> see more about `some()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a boolean](#returns-a-boolean-1)
 
 - ### every()
 
@@ -1363,7 +1423,9 @@ A value to use as this when executing `callbackFn`. See iterative methods.
 
 true if `callbackFn` returns a truthy value for every array element. Otherwise, false.
 
-> #### -> see more about `some()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
+> #### -> see more about `every()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a boolean](#returns-a-boolean-1)
 
 - ### includes()
 
@@ -1463,6 +1525,8 @@ A boolean value which is `true` if the value `searchElement` is found within the
 (or the part of the array indicated by the index fromIndex, if specified).
 
 > #### -> see more about `includes()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a boolean](#returns-a-boolean-1)
 
 - ### isArray()
 
@@ -1539,6 +1603,8 @@ The `value` to be checked.
 `true` if `value` is an Array; otherwise, `false`. `false` is always returned if `value` is a TypedArray instance.
 
 > #### -> see more about `isArray()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a boolean](#returns-a-boolean-1)
 
 - ### join()
 
@@ -1638,6 +1704,8 @@ A string to separate each pair of adjacent elements of the array. If omitted, th
 A string with all array elements joined. If `arr.length` is `0`, the empty string is returned.
 
 > #### -> see more about `join()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a String](#returns-a-string-1)
 
 - ### at()
 
@@ -1737,6 +1805,8 @@ The element in the array matching the given `index`. Always returns undefined if
 or `index >= array.length` without attempting to access the corresponding property.
 
 > #### -> see more about `at()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a number](#returns-a-number-1)
 
 - ### findIndex()
 
@@ -1838,6 +1908,8 @@ A value to use as this when executing `callbackFn`. See iterative methods.
 The `index` of the first `element` in the `array` that passes the test. Otherwise, `-1`.
 
 > #### -> see more about `findIndex()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a number](#returns-a-number-1)
 
 - ### push()
 
@@ -1966,6 +2038,8 @@ The element(s) to add to the end of the array.
 The new length property of the object upon which the method was called.
 
 > #### -> see more about `push()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/push)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a number](#returns-a-number-1)
 
 - ### unshift()
 
@@ -2058,6 +2132,8 @@ The elements to add to the front of the arr.
 The new length property of the object upon which the method was called.
 
 > #### -> see more about `unshift()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)
+>
+> #### 👆🏽 go up to [Array-Methods #returns a number](#returns-a-number-1)
 
 - ### concat()
 
@@ -2159,6 +2235,8 @@ concat returns a shallow copy of the existing array on which it is called.
 A new Array instance.
 
 > #### -> see more about `concat()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### flat()
 
@@ -2244,6 +2322,8 @@ The `depth` level specifying how deep a nested array structure should be flatten
 A new array with the sub-array elements concatenated into it.
 
 > #### -> see more about `flat()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### filter()
 
@@ -2414,6 +2494,8 @@ the given `array` that pass the test implemented by the provided function.
 If no elements pass the test, an empty `array` will be returned.
 
 > #### -> see more about `filter()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### from()
 
@@ -2538,6 +2620,8 @@ Value to use as this when executing `mapFn`.
 A new Array instance.
 
 > #### -> see more about `from()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from#array_from_a_nodelist)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### map()
 
@@ -2745,6 +2829,8 @@ A value to use as this when executing `callbackFn`. See iterative methods.
 A new array with each element being the result of the callback function.
 
 > #### -> see more about `map()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### of()
 
@@ -2817,6 +2903,8 @@ Elements used to create the array.
 A new Array instance.
 
 > #### -> see more about `of()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/of)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### slice()
 
@@ -2937,6 +3025,8 @@ Zero-based index at which to end extraction, converted to an `integer.slice()` e
 A new array containing the extracted elements.
 
 > #### -> see more about `slice()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an array](#returns-an-array-1)
 
 - ### fill()
 
@@ -3046,6 +3136,8 @@ Zero-based index at which to `end` filling, converted to an integer. `fill()` fi
 The modified array, filled with `value`.
 
 > #### -> see more about `fill()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)
+>
+> #### 👆🏽 go up to [Array-Methods #returns the same modified array](#returns-the-same-modified-array)
 
 - ### sort()
 
@@ -3294,6 +3386,8 @@ If omitted, the array elements are converted to strings, then sorted according t
 The reference to the original array, now sorted. Note that the array is sorted in place, and no copy is made.
 
 > #### -> see more about `sort()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
+>
+> #### 👆🏽 go up to [Array-Methods #returns the same modified array](#returns-the-same-modified-array)
 
 - ### find()
 
@@ -3418,6 +3512,8 @@ The first element in the array that satisfies the provided testing function.
 Otherwise, undefined is returned.
 
 > #### -> see more about `find()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an element of the array](#returns-an-element-of-the-array)
 
 - ### findLast()
 
@@ -3555,6 +3651,8 @@ The value of the `element` in the `array` with the highest `index` value that sa
 the provided testing function; `undefined` if no matching `element` is found.
 
 > #### -> see more about `findLast()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an element of the array](#returns-an-element-of-the-array)
 
 - ### pop()
 
@@ -3627,6 +3725,8 @@ console.log(plainObj); // { length: 0 }
 The removed element from the array; `undefined` if the array is empty.
 
 > #### -> see more about `pop()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an element of the array](#returns-an-element-of-the-array)
 
 - ### shift()
 
@@ -3693,6 +3793,8 @@ while (typeof (i = names.shift()) !== "undefined") {
 The removed element from the array; `undefined` if the array is empty.
 
 > #### -> see more about `shift()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/shift)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an element of the array](#returns-an-element-of-the-array)
 
 - ### entries()
 
@@ -3783,6 +3885,8 @@ for (const entry of Array.prototype.entries.call(arrayLike)) {
 A new iterable iterator object.
 
 > #### -> see more about `entries()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an object](#returns-an-object)
 
 - ### values()
 
@@ -3901,6 +4005,8 @@ console.log(iterator.next().value); // "n"
 A new iterable iterator object.
 
 > #### -> see more about `values()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/values)
+>
+> #### 👆🏽 go up to [Array-Methods #returns an object](#returns-an-object)
 
 ## Object-Methods
 
@@ -4051,6 +4157,8 @@ The String name or Symbol of the property to test.
 true if the specified object has directly defined the specified property. Otherwise false
 
 > #### -> see more about `hasOwn()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a boolean](#returns-a-boolean-2)
 
 - ### is()
 
@@ -4133,6 +4241,8 @@ The second value to compare.
 A boolean indicating whether or not the two arguments are the same value.
 
 > #### -> see more about `is()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a boolean](#returns-a-boolean-2)
 
 - ### isFrozen()
 
@@ -4269,6 +4379,8 @@ The object which should be checked.
 A Boolean indicating whether or not the given object is frozen.
 
 > #### -> see more about `isFrozen()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a boolean](#returns-a-boolean-2)
 
 - ### isPrototypeOf()
 
@@ -4395,6 +4507,8 @@ A boolean indicating whether the calling object (this) lies in the prototype
 chain of object. Directly returns false when object is not an object (i.e. a primitive).
 
 > #### -> see more about `isPrototypeOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a boolean](#returns-a-boolean-2)
 
 - ### isSealed()
 
@@ -4497,6 +4611,8 @@ The object which should be checked.
 A Boolean indicating whether or not the given object is sealed.
 
 > #### -> see more about `isSealed()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a boolean](#returns-a-boolean-2)
 
 - ### toString()
 
@@ -4667,6 +4783,8 @@ parameters. For example, the `Number.prototype.toString()` and
 A string representing the object.
 
 > #### -> see more about `toString()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString)
+>
+> #### 👆🏽 go up to [Object-Methods #returns a string object](#returns-a-string-object)
 
 - ### entries()
 
@@ -4782,6 +4900,8 @@ Each key-value pair is an array with two elements: the first element is the prop
 key (which is always a string), and the second element is the property value.
 
 > #### -> see more about `entries()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an array](#returns-an-array-2)
 
 - ### keys()
 
@@ -4867,6 +4987,8 @@ An object.
 An array of strings representing the given object's own enumerable string-keyed property keys.
 
 > #### -> see more about `keys()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an array](#returns-an-array-2)
 
 - ### values()
 
@@ -4950,3 +5072,636 @@ An object.
 An array containing the given object's own enumerable string-keyed property values.
 
 > #### -> see more about `values()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an array](#returns-an-array-2)
+
+- ### assign()
+
+The `Object.assign()` static method copies all enumerable own properties from one or
+more source objects to a target object. It returns the modified target object.
+
+```js
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// Expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget === target);
+// Expected output: true
+```
+
+Properties in the target object are overwritten by properties in the sources if
+they have the same key. Later sources' properties overwrite earlier ones.
+
+The `Object.assign()` method only copies enumerable and own properties from a source
+object to a target object. It uses `[[Get]]` on the source and `[[Set]]` on the target,
+so it will invoke getters and setters. Therefore it assigns properties, versus
+copying or defining new properties. This may make it unsuitable for merging new
+properties into a prototype if the merge sources contain getters.
+
+For copying property definitions (including their enumerability) into prototypes,
+use `Object.getOwnPropertyDescriptor()` and `Object.defineProperty()` instead.
+
+Both `String` and `Symbol` properties are copied.
+
+In case of an error, for example if a property is non-writable, a TypeError is raised,
+and the target object is changed if any properties are added before the error is raised.
+
+#### Cloning an object
+
+```js
+const obj = { a: 1 };
+const copy = Object.assign({}, obj);
+console.log(copy); // { a: 1 }
+```
+
+#### Warning for Deep Clone
+
+For deep cloning, we need to use alternatives like `structuredClone()`,
+because `Object.assign()` copies property values.
+
+If the source value is a reference to an object, it only copies the reference value.
+
+```js
+const obj1 = { a: 0, b: { c: 0 } };
+const obj2 = Object.assign({}, obj1);
+console.log(obj2); // { a: 0, b: { c: 0 } }
+
+obj1.a = 1;
+console.log(obj1); // { a: 1, b: { c: 0 } }
+console.log(obj2); // { a: 0, b: { c: 0 } }
+
+obj2.a = 2;
+console.log(obj1); // { a: 1, b: { c: 0 } }
+console.log(obj2); // { a: 2, b: { c: 0 } }
+
+obj2.b.c = 3;
+console.log(obj1); // { a: 1, b: { c: 3 } }
+console.log(obj2); // { a: 2, b: { c: 3 } }
+
+// Deep Clone
+const obj3 = { a: 0, b: { c: 0 } };
+const obj4 = structuredClone(obj3);
+obj3.a = 4;
+obj3.b.c = 4;
+console.log(obj4); // { a: 0, b: { c: 0 } }
+```
+
+#### Merging objects
+
+```js
+const o1 = { a: 1 };
+const o2 = { b: 2 };
+const o3 = { c: 3 };
+
+const obj = Object.assign(o1, o2, o3);
+console.log(obj); // { a: 1, b: 2, c: 3 }
+console.log(o1); // { a: 1, b: 2, c: 3 }, target object itself is changed.
+```
+
+#### Merging objects with same properties
+
+The properties are overwritten by other objects that have the same properties later in the parameters order.
+
+```js
+const o1 = { a: 1, b: 1, c: 1 };
+const o2 = { b: 2, c: 2 };
+const o3 = { c: 3 };
+
+const obj = Object.assign({}, o1, o2, o3);
+console.log(obj); // { a: 1, b: 2, c: 3 }
+```
+
+#### Parameters
+
+- **Object.assign**(`target`, `...sources`)
+
+`target`
+
+The `target` object — what to apply the `sources`' properties to, which is returned after it is modified.
+
+`sources`
+
+The source object(s) — objects containing the properties you want to apply.
+
+#### Return value
+
+The target object.
+
+> #### -> see more about `assign()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an object](#returns-an-object-1)
+
+- ### create()
+
+The `Object.create()` static method creates a new object, using an existing
+object as the prototype of the newly created object.
+
+```js
+const person = {
+  isHuman: false,
+  printIntroduction: function () {
+    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+  },
+};
+
+const me = Object.create(person);
+
+me.name = "Matthew"; // "name" is a property set on "me", but not on "person"
+me.isHuman = true; // Inherited properties can be overwritten
+
+me.printIntroduction();
+// Expected output: "My name is Matthew. Am I human? true"
+```
+
+#### Classical inheritance with Object.create()
+
+Below is an example of how to use `Object.create()` to achieve classical inheritance.
+This is for a single inheritance, which is all that JavaScript supports.
+
+```js
+// Shape - superclass
+function Shape() {
+  this.x = 0;
+  this.y = 0;
+}
+
+// superclass method
+Shape.prototype.move = function (x, y) {
+  this.x += x;
+  this.y += y;
+  console.info("Shape moved.");
+};
+
+// Rectangle - subclass
+function Rectangle() {
+  Shape.call(this); // call super constructor.
+}
+
+// subclass extends superclass
+Rectangle.prototype = Object.create(Shape.prototype, {
+  // If you don't set Rectangle.prototype.constructor to Rectangle,
+  // it will take the prototype.constructor of Shape (parent).
+  // To avoid that, we set the prototype.constructor to Rectangle (child).
+  constructor: {
+    value: Rectangle,
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  },
+});
+
+const rect = new Rectangle();
+
+console.log("Is rect an instance of Rectangle?", rect instanceof Rectangle); // true
+console.log("Is rect an instance of Shape?", rect instanceof Shape); // true
+rect.move(1, 1); // Logs 'Shape moved.'
+```
+
+Note that there are caveats to watch out for using `create()`, such as re-adding
+the constructor property to ensure proper semantics. Although `Object.create()` is
+believed to have better performance than mutating the prototype with `Object.setPrototypeOf()`,
+the difference is in fact negligible if no instances have been created and property
+accesses haven't been optimized yet. In modern code, the class syntax should be preferred in any case.
+
+#### Using propertiesObject argument with Object.create()
+
+`Object.create()` allows fine-tuned control over the object creation process.
+The object initializer syntax is, in fact, a syntax sugar of `Object.create()`.
+With `Object.create()`, we can create objects with a designated prototype and
+also some properties. Note that the second parameter maps keys to property
+descriptors — this means you can control each property's enumerability,
+configurability, etc. as well, which you can't do in object initializers.
+
+```js
+o = {};
+// Is equivalent to:
+o = Object.create(Object.prototype);
+
+o = Object.create(Object.prototype, {
+  // foo is a regular data property
+  foo: {
+    writable: true,
+    configurable: true,
+    value: "hello",
+  },
+  // bar is an accessor property
+  bar: {
+    configurable: false,
+    get() {
+      return 10;
+    },
+    set(value) {
+      console.log("Setting `o.bar` to", value);
+    },
+  },
+});
+
+// Create a new object whose prototype is a new, empty
+// object and add a single property 'p', with value 42.
+o = Object.create({}, { p: { value: 42 } });
+```
+
+With `Object.create()`, we can create an object with `null` as prototype.
+The equivalent syntax in object initializers would be the **proto** key.
+
+```js
+o = Object.create(null);
+// Is equivalent to:
+o = { __proto__: null };
+```
+
+By default properties are not writable, enumerable or configurable.
+
+```js
+o.p = 24; // throws in strict mode
+o.p; // 42
+
+o.q = 12;
+for (const prop in o) {
+  console.log(prop);
+}
+// 'q'
+
+delete o.p;
+// false; throws in strict mode
+```
+
+To specify a property with the same attributes as in an initializer,
+explicitly specify writable, enumerable and configurable.
+
+```js
+o2 = Object.create(
+  {},
+  {
+    p: {
+      value: 42,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    },
+  }
+);
+// This is not equivalent to:
+// o2 = Object.create({ p: 42 })
+// which will create an object with prototype { p: 42 }
+```
+
+You can use `Object.create()` to mimic the behavior of the new operator.
+
+```js
+function Constructor() {}
+o = new Constructor();
+// Is equivalent to:
+o = Object.create(Constructor.prototype);
+```
+
+Of course, if there is actual initialization code in the Constructor function,
+the `Object.create()` method cannot reflect it.
+
+#### Parameters
+
+`proto`
+
+The object which should be the prototype of the newly-created object.
+
+`propertiesObject` Optional
+
+If specified and not undefined, an object whose enumerable own properties specify property descriptors to be added to the newly-created object, with the corresponding property names. These properties correspond to the second argument of `Object.defineProperties()`.
+
+#### Return value
+
+A new object with the specified prototype object and properties.
+
+#### Exceptions
+
+`TypeError`
+
+Thrown if `proto` is neither `null` nor an Object.
+
+> #### -> see more about `create()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an object](#returns-an-object-1)
+
+- ### fromEntries()
+
+The `Object.fromEntries()` static method transforms a list of key-value pairs into an object.
+
+```js
+const entries = new Map([
+  ["foo", "bar"],
+  ["baz", 42],
+]);
+
+const obj = Object.fromEntries(entries);
+
+console.log(obj);
+// Expected output: Object { foo: "bar", baz: 42 }
+```
+
+The `Object.fromEntries()` method takes a list of key-value pairs and returns a new
+object whose properties are given by those entries. The iterable argument is expected
+to be an object that implements an @@iterator method. The method returns an iterator
+object that produces two-element array-like objects. The first element is a value that
+will be used as a property key, and the second element is the value to associate with that property key.
+
+`Object.fromEntries()` performs the reverse of `Object.entries()`, except that `Object.entries()`
+only returns string-keyed properties, while `Object.fromEntries()` can also create symbol-keyed properties.
+
+#### Converting a Map to an Object
+
+With `Object.fromEntries()`,you can convert from Map to Object:
+
+```js
+const map = new Map([
+  ["foo", "bar"],
+  ["baz", 42],
+]);
+const obj = Object.fromEntries(map);
+console.log(obj); // { foo: "bar", baz: 42 }
+```
+
+#### Converting an Array to an Object
+
+With `Object.fromEntries()`, you can convert from Array to Object:
+
+```js
+const arr = [
+  ["0", "a"],
+  ["1", "b"],
+  ["2", "c"],
+];
+const obj = Object.fromEntries(arr);
+console.log(obj); // { 0: "a", 1: "b", 2: "c" }
+```
+
+#### Object transformations
+
+With `Object.fromEntries()`, its reverse method `Object.entries()`,
+and array manipulation methods, you are able to transform objects like this:
+
+```js
+const object1 = { a: 1, b: 2, c: 3 };
+
+const object2 = Object.fromEntries(
+  Object.entries(object1).map(([key, val]) => [key, val * 2])
+);
+
+console.log(object2);
+// { a: 2, b: 4, c: 6 }
+```
+
+#### Parameters
+
+- **Object.fromEntries**(`iterable`)
+
+`iterable`
+
+An `iterable`, such as an `Array` or `Map`, containing a list of objects. Each object should have two properties:
+
+`0`
+
+A `string` or `symbol` representing the property key.
+
+`1`
+
+The property value.
+
+Typically, this object is implemented as a two-element array, with the first
+element being the property key and the second element being the property value.
+
+#### Return value
+
+A new object whose properties are given by the entries of the `iterable`.
+
+> #### -> see more about `fromEntries()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an object](#returns-an-object-1)
+
+- ### seal()
+
+The `Object.seal()` static method seals an object. Sealing an object prevents
+extensions and makes existing properties non-configurable. A sealed object has
+a fixed set of properties: new properties cannot be added, existing properties
+cannot be removed, their enumerability and configurability cannot be changed,
+and its prototype cannot be re-assigned. Values of existing properties can still
+be changed as long as they are writable. `seal()` returns the same object that was passed in.
+
+```js
+const object1 = {
+  property1: 42,
+};
+
+Object.seal(object1);
+object1.property1 = 33;
+console.log(object1.property1);
+// Expected output: 33
+
+delete object1.property1; // Cannot delete when sealed
+console.log(object1.property1);
+// Expected output: 33
+```
+
+Sealing an object is equivalent to preventing extensions and then changing
+all existing properties' descriptors to configurable: false. This has the effect
+of making the set of properties on the object fixed. Making all properties
+non-configurable also prevents them from being converted from data properties to
+accessor properties and vice versa, but it does not prevent the values of data
+properties from being changed. Attempting to delete or add properties to a sealed object,
+or to convert a data property to accessor or vice versa, will fail, either silently or
+by throwing a TypeError (most commonly, although not exclusively, when in strict mode code).
+
+The prototype chain remains untouched. However, due to the effect of preventing
+extensions, the `[[Prototype]]` cannot be reassigned.
+
+Unlike `Object.freeze()`, objects sealed with `Object.seal()` may have their existing
+properties changed, as long as they are writable.
+
+#### Using Object.seal
+
+```js
+const obj = {
+  prop() {},
+  foo: "bar",
+};
+
+// New properties may be added, existing properties
+// may be changed or removed.
+obj.foo = "baz";
+obj.lumpy = "woof";
+delete obj.prop;
+
+const o = Object.seal(obj);
+
+o === obj; // true
+Object.isSealed(obj); // true
+
+// Changing property values on a sealed object
+// still works.
+obj.foo = "quux";
+
+// But you can't convert data properties to accessors,
+// or vice versa.
+Object.defineProperty(obj, "foo", {
+  get() {
+    return "g";
+  },
+}); // throws a TypeError
+
+// Now any changes, other than to property values,
+// will fail.
+obj.quaxxor = "the friendly duck";
+// silently doesn't add the property
+delete obj.foo;
+// silently doesn't delete the property
+
+// ...and in strict mode such attempts
+// will throw TypeErrors.
+function fail() {
+  "use strict";
+  delete obj.foo; // throws a TypeError
+  obj.sparky = "arf"; // throws a TypeError
+}
+fail();
+
+// Attempted additions through
+// Object.defineProperty will also throw.
+Object.defineProperty(obj, "ohai", {
+  value: 17,
+}); // throws a TypeError
+Object.defineProperty(obj, "foo", {
+  value: "eit",
+}); // changes existing property value
+```
+
+#### Non-object argument
+
+In ES5, if the argument to this method is not an object (a primitive),
+then it will cause a TypeError. In ES2015, a non-object argument will be
+returned as-is without any errors, since primitives are already, by definition, immutable.
+
+```js
+Object.seal(1);
+// TypeError: 1 is not an object (ES5 code)
+
+Object.seal(1);
+// 1                             (ES2015 code)
+```
+
+#### Parameters
+
+- **Object.seal**(`obj')
+
+`obj'
+
+The object which should be sealed.
+
+#### Return value
+
+The object being sealed.
+
+> #### -> see more about `seal()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an object](#returns-an-object-1)
+
+- ### valueOf()
+
+The `valueOf()` method of Object instances converts the this value to an object.
+This method is meant to be overridden by derived objects for custom type conversion logic.
+
+```js
+function MyNumberType(n) {
+  this.number = n;
+}
+
+MyNumberType.prototype.valueOf = function () {
+  return this.number;
+};
+
+const object1 = new MyNumberType(4);
+
+console.log(object1 + 3);
+// Expected output: 7
+```
+
+JavaScript calls the `valueOf()` method to convert an object to a primitive value.
+You rarely need to invoke the `valueOf()` method yourself; JavaScript automatically
+invokes it when encountering an object where a primitive value is expected.
+
+This method is called in priority by numeric conversion and primitive conversion,
+but string conversion calls `toString()` in priority, and `toString()` is very likely
+to return a string value (even for the `Object.prototype.toString()` base implementation),
+so `valueOf()` is usually not called in this case.
+
+All objects that inherit from Object.prototype (that is, all except null-prototype objects)
+inherit the `toString()` method. The `Object.prototype.valueOf()` base implementation is
+deliberately useless: by returning an object, its return value will never be used by any
+primitive conversion algorithm. Many built-in objects override this method to return an
+appropriate primitive value. When you create a custom object, you can override `valueOf()`
+to call a custom method, so that your custom object can be converted to a primitive value.
+Generally, `valueOf()` is used to return a value that is most meaningful for the object — unlike
+`toString()`, it does not need to be a string. Alternatively, you can add a @@toPrimitive method,
+which allows even more control over the conversion process, and will always be preferred
+over `valueOf()` or `toString()` for any type conversion.
+
+#### Using valueOf()
+
+The base `valueOf()` method returns the this value itself, converted to an object if it isn't already.
+Therefore its return value will never be used by any primitive conversion algorithm.
+
+```js
+const obj = { foo: 1 };
+console.log(obj.valueOf() === obj); // true
+
+console.log(Object.prototype.valueOf.call("primitive"));
+// [String: 'primitive'] (a wrapper object)
+```
+
+#### Overriding valueOf for custom objects
+
+You can create a function to be called in place of the default `valueOf()` method.
+Your function should take no arguments, since it won't be passed any when called during type conversion.
+
+For example, you can add a `valueOf()` method to your custom class Box.
+
+```js
+class Box {
+  #value;
+  constructor(value) {
+    this.#value = value;
+  }
+  valueOf() {
+    return this.#value;
+  }
+}
+```
+
+With the preceding code in place, any time an object of type Box is used in a context
+where it is to be represented as a primitive value (but not specifically a string),
+JavaScript automatically calls the function defined in the preceding code.
+
+```js
+const box = new Box(123);
+console.log(box + 456); // 579
+console.log(box == 123); // true
+```
+
+An object's `valueOf()` method is usually invoked by JavaScript, but you can invoke it yourself as follows:
+
+```js
+box.valueOf();
+```
+
+#### Return value
+
+The `this` value, converted to an object.
+
+**!** Note: In order for valueOf to be useful during type conversion,
+it must return a primitive. Because all primitive types have their own `valueOf()` methods,
+calling `aPrimitiveValue.valueOf()` generally does not invoke `Object.prototype.valueOf()`.
+
+> #### -> see more about `valueOf()`: [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/valueOf)
+>
+> #### 👆🏽 go up to [Object-Methods #returns an object](#returns-an-object-1)
